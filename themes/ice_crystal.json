@@ -1,0 +1,15 @@
+{
+  "name": "Ice Crystal",
+  "description": "Frozen, crystalline appearance",
+  "bg": "#F0F8FF",
+  "text": "#191970",
+  "gradient_color": "#F0F8FF",
+  "water": "#E0F0FF",
+  "parks": "#F0F8FF",
+  "road_motorway": "#4682B4",
+  "road_primary": "#5F9EA0",
+  "road_secondary": "#6495ED",
+  "road_tertiary": "#87CEEB",
+  "road_residential": "#B0C4DE",
+  "road_default": "#6495ED"
+}

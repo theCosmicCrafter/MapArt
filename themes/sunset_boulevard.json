@@ -1,0 +1,15 @@
+{
+  "name": "Sunset Boulevard",
+  "description": "LA sunset vibes with warm gradients",
+  "bg": "#2E1A47",
+  "text": "#FFB347",
+  "gradient_color": "#2E1A47",
+  "water": "#1A0E2E",
+  "parks": "#3E2457",
+  "road_motorway": "#FF69B4",
+  "road_primary": "#9370DB",
+  "road_secondary": "#FFD700",
+  "road_tertiary": "#FFA500",
+  "road_residential": "#FF8C00",
+  "road_default": "#FFD700"
+}

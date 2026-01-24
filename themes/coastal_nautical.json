@@ -1,0 +1,52 @@
+{
+  "name": "Coastal Nautical",
+  "bg": "#F0F8FF",
+  "text": "#000080",
+  "gradient_color": "#F0F8FF",
+  "category": "geographic",
+  "geographic_context": "coastal",
+  "description": "Nautical chart style with blues and sea-themed colors",
+  "colors": {
+    "background": "#F0F8FF",
+    "water": [
+      "#006994",
+      "#0099CC",
+      "#4682B4"
+    ],
+    "land": [
+      "#F4A460",
+      "#DEB887",
+      "#D2B48C"
+    ],
+    "beach": "#F5DEB3",
+    "urban": "#8B7D6B",
+    "roads": "#2F4F4F",
+    "labels": "#000080",
+    "road_motorway": "#2F4F4F",
+    "road_primary": "#404040",
+    "road_secondary": "#606060",
+    "road_tertiary": "#808080",
+    "road_residential": "#A0A0A0",
+    "road_default": "#808080",
+    "parks": "#90EE90"
+  },
+  "coastal_colors": {
+    "deep_water": "#006994",
+    "shallow_water": "#4682B4",
+    "surf": "#87CEEB",
+    "wet_sand": "#C2B280",
+    "dry_sand": "#F5DEB3"
+  },
+  "texture_overlay": "parchment.png",
+  "texture_intensity": 0.25,
+  "edge_treatment": "soft_edges",
+  "edge_softness": 0.8,
+  "adaptive_colors": true,
+  "style": {
+    "line_width": 2.0,
+    "road_style": "curved",
+    "label_size": "medium",
+    "label_style": "bold",
+    "show_depth_contours": true
+  }
+}

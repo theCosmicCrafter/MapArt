@@ -1,0 +1,331 @@
+{
+  "version": "1.0",
+  "created": "2026-01-24",
+  "categories": {
+    "base": {
+      "description": "Fundamental paper substrates",
+      "textures": [
+        {
+          "filename": "archival_cotton_rag.jpg",
+          "path": "base\\archival_cotton_rag.jpg",
+          "size": 2697709,
+          "description": "Archival Cotton Rag"
+        },
+        {
+          "filename": "clean_recycled_speckle.jpg",
+          "path": "base\\clean_recycled_speckle.jpg",
+          "size": 2818314,
+          "description": "Clean Recycled Speckle"
+        },
+        {
+          "filename": "clean_stucco_wall.jpg",
+          "path": "base\\clean_stucco_wall.jpg",
+          "size": 4046132,
+          "description": "Clean Stucco Wall"
+        },
+        {
+          "filename": "cold_press_bright.jpg",
+          "path": "base\\cold_press_bright.jpg",
+          "size": 1420557,
+          "description": "Cold Press Bright"
+        },
+        {
+          "filename": "heavy_cold_press.jpg",
+          "path": "base\\heavy_cold_press.jpg",
+          "size": 3853881,
+          "description": "Heavy Cold Press"
+        },
+        {
+          "filename": "recycled_bond_grey.jpg",
+          "path": "base\\recycled_bond_grey.jpg",
+          "size": 30431898,
+          "description": "Recycled Bond Grey"
+        },
+        {
+          "filename": "recycled_greyboard.jpg",
+          "path": "base\\recycled_greyboard.jpg",
+          "size": 4002788,
+          "description": "Recycled Greyboard"
+        },
+        {
+          "filename": "rough_grey_pulp.jpg",
+          "path": "base\\rough_grey_pulp.jpg",
+          "size": 7899647,
+          "description": "Rough Grey Pulp"
+        },
+        {
+          "filename": "slate_concrete.jpg",
+          "path": "base\\slate_concrete.jpg",
+          "size": 8931253,
+          "description": "Slate Concrete"
+        },
+        {
+          "filename": "spalted_wood_grain.jpg",
+          "path": "base\\spalted_wood_grain.jpg",
+          "size": 6601021,
+          "description": "Spalted Wood Grain"
+        },
+        {
+          "filename": "stippled_gesso.jpg",
+          "path": "base\\stippled_gesso.jpg",
+          "size": 2614782,
+          "description": "Stippled Gesso"
+        },
+        {
+          "filename": "vintage_sage_cardstock.jpg",
+          "path": "base\\vintage_sage_cardstock.jpg",
+          "size": 1438598,
+          "description": "Vintage Sage Cardstock"
+        },
+        {
+          "filename": "wavy_gold_cardstock.jpg",
+          "path": "base\\wavy_gold_cardstock.jpg",
+          "size": 6825176,
+          "description": "Wavy Gold Cardstock"
+        },
+        {
+          "filename": "white_linen_canvas.jpg",
+          "path": "base\\white_linen_canvas.jpg",
+          "size": 3620263,
+          "description": "White Linen Canvas"
+        },
+        {
+          "filename": "white_recycled_bond.jpg",
+          "path": "base\\white_recycled_bond.jpg",
+          "size": 7186773,
+          "description": "White Recycled Bond"
+        }
+      ]
+    },
+    "specialty": {
+      "description": "Industrial and unique materials",
+      "textures": [
+        {
+          "filename": "antique_book_cloth.jpg",
+          "path": "specialty\\antique_book_cloth.jpg",
+          "size": 3112878,
+          "description": "Antique Book Cloth"
+        },
+        {
+          "filename": "bronze_suede_sepia.jpg",
+          "path": "specialty\\bronze_suede_sepia.jpg",
+          "size": 9476119,
+          "description": "Bronze Suede Sepia"
+        },
+        {
+          "filename": "clean_kraft_cardstock.jpg",
+          "path": "specialty\\clean_kraft_cardstock.jpg",
+          "size": 10676162,
+          "description": "Clean Kraft Cardstock"
+        },
+        {
+          "filename": "collage_scraps.jpg",
+          "path": "specialty\\collage_scraps.jpg",
+          "size": 10316508,
+          "description": "Collage Scraps"
+        },
+        {
+          "filename": "corrugated_tear.jpg",
+          "path": "specialty\\corrugated_tear.jpg",
+          "size": 23868957,
+          "description": "Corrugated Tear"
+        },
+        {
+          "filename": "crimson_library_cloth.jpg",
+          "path": "specialty\\crimson_library_cloth.jpg",
+          "size": 4041413,
+          "description": "Crimson Library Cloth"
+        },
+        {
+          "filename": "crumpled_tissue_beige.jpg",
+          "path": "specialty\\crumpled_tissue_beige.jpg",
+          "size": 5385962,
+          "description": "Crumpled Tissue Beige"
+        },
+        {
+          "filename": "dark_weave_charcoal.jpg",
+          "path": "specialty\\dark_weave_charcoal.jpg",
+          "size": 16840011,
+          "description": "Dark Weave Charcoal"
+        },
+        {
+          "filename": "folded_correspondence_a.jpg",
+          "path": "specialty\\folded_correspondence_a.jpg",
+          "size": 5241074,
+          "description": "Folded Correspondence A"
+        },
+        {
+          "filename": "folded_correspondence_b.jpg",
+          "path": "specialty\\folded_correspondence_b.jpg",
+          "size": 4190923,
+          "description": "Folded Correspondence B"
+        },
+        {
+          "filename": "forest_buckram.jpg",
+          "path": "specialty\\forest_buckram.jpg",
+          "size": 8931253,
+          "description": "Forest Buckram"
+        },
+        {
+          "filename": "foxed_parchment.jpg",
+          "path": "specialty\\foxed_parchment.jpg",
+          "size": 2084114,
+          "description": "Foxed Parchment"
+        },
+        {
+          "filename": "oiled_kraft_dark.jpg",
+          "path": "specialty\\oiled_kraft_dark.jpg",
+          "size": 2123624,
+          "description": "Oiled Kraft Dark"
+        },
+        {
+          "filename": "pale_blue_folded.jpg",
+          "path": "specialty\\pale_blue_folded.jpg",
+          "size": 9362854,
+          "description": "Pale Blue Folded"
+        },
+        {
+          "filename": "raw_packing_kraft.jpg",
+          "path": "specialty\\raw_packing_kraft.jpg",
+          "size": 2253469,
+          "description": "Raw Packing Kraft"
+        },
+        {
+          "filename": "taped_spine_binding.jpg",
+          "path": "specialty\\taped_spine_binding.jpg",
+          "size": 8289854,
+          "description": "Taped Spine Binding"
+        },
+        {
+          "filename": "water_damaged_ledger.jpg",
+          "path": "specialty\\water_damaged_ledger.jpg",
+          "size": 7472418,
+          "description": "Water Damaged Ledger"
+        }
+      ]
+    },
+    "artistic": {
+      "description": "Artistic and historical papers",
+      "textures": [
+        {
+          "filename": "film_grain_gradient.jpg",
+          "path": "artistic\\film_grain_gradient.jpg",
+          "size": 3437988,
+          "description": "Film Grain Gradient"
+        },
+        {
+          "filename": "frosted_acetate.jpg",
+          "path": "artistic\\frosted_acetate.jpg",
+          "size": 5093880,
+          "description": "Frosted Acetate"
+        },
+        {
+          "filename": "gothic_ink_frame.jpg",
+          "path": "artistic\\gothic_ink_frame.jpg",
+          "size": 8991154,
+          "description": "Gothic Ink Frame"
+        },
+        {
+          "filename": "high_contrast_stone.jpg",
+          "path": "artistic\\high_contrast_stone.jpg",
+          "size": 14849788,
+          "description": "High Contrast Stone"
+        },
+        {
+          "filename": "metallic_gold_grain.jpg",
+          "path": "artistic\\metallic_gold_grain.jpg",
+          "size": 3604244,
+          "description": "Metallic Gold Grain"
+        },
+        {
+          "filename": "split_tone_wall_overlay.jpg",
+          "path": "artistic\\split_tone_wall_overlay.jpg",
+          "size": 1740510,
+          "description": "Split Tone Wall Overlay"
+        },
+        {
+          "filename": "spray_noise_overlay.jpg",
+          "path": "artistic\\spray_noise_overlay.jpg",
+          "size": 9744813,
+          "description": "Spray Noise Overlay"
+        },
+        {
+          "filename": "wet_wash_watercolor.jpg",
+          "path": "artistic\\wet_wash_watercolor.jpg",
+          "size": 3007366,
+          "description": "Wet Wash Watercolor"
+        },
+        {
+          "filename": "treasure_map.png",
+          "path": "artistic\\treasure_map.png",
+          "size": 2472343,
+          "description": "Treasure Map"
+        }
+      ]
+    },
+    "edges": {
+      "description": "Edge treatments and masks",
+      "textures": [
+        {
+          "filename": "crushed_bond_var_a.jpg",
+          "path": "edges\\crushed_bond_var_a.jpg",
+          "size": 2874541,
+          "description": "Crushed Bond Var A"
+        },
+        {
+          "filename": "crushed_bond_var_b.jpg",
+          "path": "edges\\crushed_bond_var_b.jpg",
+          "size": 2739411,
+          "description": "Crushed Bond Var B"
+        },
+        {
+          "filename": "crushed_bond_white.jpg",
+          "path": "edges\\crushed_bond_white.jpg",
+          "size": 1399841,
+          "description": "Crushed Bond White"
+        },
+        {
+          "filename": "burnt_edges.png",
+          "path": "edges\\burnt_edges.png",
+          "size": 2472343,
+          "description": "Burnt Edges"
+        }
+      ]
+    },
+    "stains": {
+      "description": "Stains and decay effects",
+      "textures": [
+        {
+          "filename": "black_mold_decay.jpg",
+          "path": "stains\\black_mold_decay.jpg",
+          "size": 10885536,
+          "description": "Black Mold Decay"
+        },
+        {
+          "filename": "heavy_coffee_staining.jpg",
+          "path": "stains\\heavy_coffee_staining.jpg",
+          "size": 3805975,
+          "description": "Heavy Coffee Staining"
+        },
+        {
+          "filename": "industrial_slate_decay.jpg",
+          "path": "stains\\industrial_slate_decay.jpg",
+          "size": 2529407,
+          "description": "Industrial Slate Decay"
+        },
+        {
+          "filename": "urban_concrete_decay.jpg",
+          "path": "stains\\urban_concrete_decay.jpg",
+          "size": 2710426,
+          "description": "Urban Concrete Decay"
+        },
+        {
+          "filename": "white_lead_decay.jpg",
+          "path": "stains\\white_lead_decay.jpg",
+          "size": 5101667,
+          "description": "White Lead Decay"
+        }
+      ]
+    }
+  }
+}

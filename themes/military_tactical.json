@@ -1,0 +1,15 @@
+{
+  "name": "Military Tactical",
+  "description": "War-style tactical map with blue water and military colors",
+  "bg": "#E8E4D0",
+  "text": "#2C3E50",
+  "gradient_color": "#E8E4D0",
+  "water": "#4682B4",
+  "parks": "#7CB342",
+  "road_motorway": "#8B0000",
+  "road_primary": "#CD5C5C",
+  "road_secondary": "#A0522D",
+  "road_tertiary": "#8B7355",
+  "road_residential": "#A08B70",
+  "road_default": "#8B7355"
+}

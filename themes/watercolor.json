@@ -1,0 +1,24 @@
+{
+  "name": "Watercolor Dreams",
+  "description": "Soft, flowing watercolor aesthetic with blended edges and artistic colors",
+  "bg": "#F8F8F8",
+  "text": "#2C3E50",
+  "gradient_color": "#F8F8F8",
+  "water": "#87CEEB",
+  "parks": "#90EE90",
+  "road_motorway": "#FF6B6B",
+  "road_primary": "#4ECDC4",
+  "road_secondary": "#45B7D1",
+  "road_tertiary": "#96CEB4",
+  "road_residential": "#DDA0DD",
+  "road_default": "#B19CD9",
+  "texture": {
+    "enabled": true,
+    "base": "watercolor",
+    "blend_mode": "overlay",
+    "opacity": 0.4,
+    "edge_effect": "soft_edges",
+    "stains": [],
+    "aging": "none"
+  }
+}

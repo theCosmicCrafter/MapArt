@@ -1,0 +1,15 @@
+{
+  "name": "Gold Rush",
+  "description": "Wild West with gold, dust, and frontier colors",
+  "bg": "#DEB887",
+  "text": "#8B4513",
+  "gradient_color": "#DEB887",
+  "water": "#87CEEB",
+  "parks": "#556B2F",
+  "road_motorway": "#8B4513",
+  "road_primary": "#FFD700",
+  "road_secondary": "#DAA520",
+  "road_tertiary": "#CD853F",
+  "road_residential": "#A0522D",
+  "road_default": "#D2691E"
+}

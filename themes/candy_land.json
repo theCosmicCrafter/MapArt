@@ -1,0 +1,15 @@
+{
+  "name": "Candy Land",
+  "description": "Playful pastel colors like candy",
+  "bg": "#FFF0F5",
+  "text": "#8B008B",
+  "gradient_color": "#FFF0F5",
+  "water": "#FFE0F0",
+  "parks": "#FFF5FA",
+  "road_motorway": "#FF1493",
+  "road_primary": "#9370DB",
+  "road_secondary": "#4169E1",
+  "road_tertiary": "#20B2AA",
+  "road_residential": "#48D1CC",
+  "road_default": "#4169E1"
+}

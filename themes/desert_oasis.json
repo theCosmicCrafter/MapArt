@@ -1,0 +1,52 @@
+{
+  "name": "Desert Oasis",
+  "bg": "#FAEBD7",
+  "text": "#8B4513",
+  "gradient_color": "#FAEBD7",
+  "category": "geographic",
+  "geographic_context": "desert",
+  "description": "Warm desert colors with oasis highlights",
+  "colors": {
+    "background": "#FAEBD7",
+    "water": "#00CED1",
+    "land": [
+      "#EDC9AF",
+      "#DEB887",
+      "#D2691E"
+    ],
+    "sand": [
+      "#F4A460",
+      "#FFE4B5",
+      "#FFDEAD"
+    ],
+    "vegetation": "#228B22",
+    "urban": "#8B7355",
+    "roads": "#8B4513",
+    "labels": "#8B4513",
+    "road_motorway": "#2F4F4F",
+    "road_primary": "#404040",
+    "road_secondary": "#606060",
+    "road_tertiary": "#808080",
+    "road_residential": "#A0A0A0",
+    "road_default": "#808080",
+    "parks": "#90EE90"
+  },
+  "desert_colors": {
+    "dunes": "#EDC9AF",
+    "rocky": "#A0826D",
+    "oasis": "#90EE90",
+    "dry_lake": "#DEB887"
+  },
+  "texture_overlay": "rough_paper.png",
+  "texture_intensity": 0.4,
+  "edge_treatment": "soft_edges",
+  "edge_softness": 1.2,
+  "adaptive_colors": true,
+  "style": {
+    "line_width": 1.8,
+    "road_style": "curved",
+    "label_size": "medium",
+    "label_style": "normal",
+    "use_warm_palette": true
+  }
+}

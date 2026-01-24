@@ -1,0 +1,15 @@
+{
+  "name": "Mars Colony",
+  "description": "Red planet aesthetic with rusty oranges and dusty terracotta",
+  "bg": "#2D1810",
+  "text": "#FF6B35",
+  "gradient_color": "#2D1810",
+  "water": "#1A0E08",
+  "parks": "#3D2018",
+  "road_motorway": "#FF6B35",
+  "road_primary": "#FFA500",
+  "road_secondary": "#FFB366",
+  "road_tertiary": "#FFCC99",
+  "road_residential": "#FFDDAA",
+  "road_default": "#FFB366"
+}

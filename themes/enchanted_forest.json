@@ -1,0 +1,15 @@
+{
+  "name": "Enchanted Forest",
+  "description": "Deep greens with bioluminescent accents",
+  "bg": "#0D1F0D",
+  "text": "#ADFF2F",
+  "gradient_color": "#0D1F0D",
+  "water": "#0A150A",
+  "parks": "#152F15",
+  "road_motorway": "#ADFF2F",
+  "road_primary": "#7FFF00",
+  "road_secondary": "#32CD32",
+  "road_tertiary": "#228B22",
+  "road_residential": "#006400",
+  "road_default": "#32CD32"
+}

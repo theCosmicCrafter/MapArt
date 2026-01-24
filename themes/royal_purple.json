@@ -1,0 +1,15 @@
+{
+  "name": "Royal Purple",
+  "description": "Regal luxury with deep purples and golds",
+  "bg": "#2E0854",
+  "text": "#FFD700",
+  "gradient_color": "#2E0854",
+  "water": "#1A0530",
+  "parks": "#3E1064",
+  "road_motorway": "#FFD700",
+  "road_primary": "#DDA0DD",
+  "road_secondary": "#C8C8C8",
+  "road_tertiary": "#B8B8B8",
+  "road_residential": "#A8A8A8",
+  "road_default": "#C8C8C8"
+}

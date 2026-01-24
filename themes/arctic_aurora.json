@@ -1,0 +1,15 @@
+{
+  "name": "Arctic Aurora",
+  "description": "Northern lights-inspired with deep blue background and aurora colors",
+  "bg": "#001133",
+  "text": "#00FFAA",
+  "gradient_color": "#001133",
+  "water": "#002244",
+  "parks": "#003355",
+  "road_motorway": "#00FFAA",
+  "road_primary": "#FFAA00",
+  "road_secondary": "#FF6600",
+  "road_tertiary": "#FF8800",
+  "road_residential": "#CC5500",
+  "road_default": "#FF6600"
+}

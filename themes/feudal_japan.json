@@ -1,0 +1,15 @@
+{
+  "name": "Feudal Japan",
+  "description": "Traditional ink wash aesthetic with sumi-e blacks and reds",
+  "bg": "#F5F5F0",
+  "text": "#2C2C2C",
+  "gradient_color": "#F5F5F0",
+  "water": "#B0C4DE",
+  "parks": "#228B22",
+  "road_motorway": "#2C2C2C",
+  "road_primary": "#8B0000",
+  "road_secondary": "#A0522D",
+  "road_tertiary": "#696969",
+  "road_residential": "#A9A9A9",
+  "road_default": "#808080"
+}

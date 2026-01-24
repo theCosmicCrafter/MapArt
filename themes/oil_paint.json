@@ -1,0 +1,24 @@
+{
+  "name": "Oil Painting",
+  "description": "Rich oil painting texture with vibrant colors and brush strokes",
+  "bg": "#FAFAFA",
+  "text": "#2C1810",
+  "gradient_color": "#FAFAFA",
+  "water": "#4682B4",
+  "parks": "#228B22",
+  "road_motorway": "#8B0000",
+  "road_primary": "#FF4500",
+  "road_secondary": "#FF6347",
+  "road_tertiary": "#FF7F50",
+  "road_residential": "#FFA07A",
+  "road_default": "#FF8C00",
+  "texture": {
+    "enabled": true,
+    "base": "canvas",
+    "blend_mode": "multiply",
+    "opacity": 0.5,
+    "edge_effect": "none",
+    "stains": [],
+    "aging": "none"
+  }
+}

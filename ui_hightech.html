@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map Art Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&family=Oswald:wght@400;700&family=Raleway:wght@400;700&family=Lato:wght@400;700&family=Bebas+Neue&family=Anton&family=Rubik:wght@400;700&display=swap">
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0b0b0f;
+      --grid: #12121a;
+      --text: #f6f6ff;
+      --muted: #8c8ca6;
+      --accent1: #ff6b6b;
+      --accent2: #ff8f3f;
+      --accent3: #ff4fd8;
+      --accent4: #8a2be2;
+      --glow: 0 0 12px rgba(255, 107, 107, 0.35), 0 0 24px rgba(255, 79, 216, 0.28);
+      --font-base: 'Space Grotesk', system-ui, sans-serif;
+      --font-size-base: 16px;
+    }
+
+    body[data-theme="synth"] {
+      --bg: #050510;
+      --panel: #0c0c16;
+      --grid: #171726;
+      --text: #f6f6ff;
+      --muted: #9ea0c2;
+      --accent1: #ff6b6b;
+      --accent2: #ff8f3f;
+      --accent3: #ff4fd8;
+      --accent4: #8a2be2;
+      --glow: 0 0 12px rgba(255, 79, 216, 0.35), 0 0 24px rgba(255, 143, 63, 0.32);
+      --font-base: 'Space Grotesk', system-ui, sans-serif;
+      --font-size-base: 15px;
+    }
+
+    /* Synth theme specific styles */
+    body[data-theme="synth"] .card {
+      background: linear-gradient(160deg, rgba(255,79,216,0.08), rgba(12,12,22,0.95) 45%, rgba(255,143,63,0.08));
+      border: 1px solid rgba(255,79,216,0.2);
+    }
+    
+    body[data-theme="synth"] .btn {
+      background: linear-gradient(120deg, #ff4fd8, #ff8f3f, #ff6b6b);
+      box-shadow: 0 10px 30px rgba(255,79,216,0.4);
+    }
+
+    body[data-theme="dark"] {
+      --bg: #050505;
+      --panel: #0b0b0f;
+      --grid: #12121a;
+      --text: #f5f5f7;
+      --muted: #8c8ca6;
+      --accent1: #6ec3ff;
+      --accent2: #5ad4b4;
+      --accent3: #8c6bff;
+      --accent4: #46a1ff;
+      --glow: 0 0 12px rgba(110,195,255,0.35), 0 0 18px rgba(140,107,255,0.28);
+      --font-base: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
+      --font-size-base: 16px;
+    }
+
+    /* Dark theme specific styles */
+    body[data-theme="dark"] .card {
+      background: linear-gradient(160deg, rgba(140,107,255,0.08), rgba(11,11,15,0.95) 45%, rgba(90,212,180,0.08));
+      border: 1px solid rgba(110,195,255,0.2);
+    }
+    
+    body[data-theme="dark"] .btn {
+      background: linear-gradient(120deg, #8c6bff, #5ad4b4, #6ec3ff);
+      box-shadow: 0 10px 30px rgba(140,107,255,0.4);
+    }
+
+    body[data-theme="light"] {
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --grid: #f0f0f0;
+      --text: #1a1a1a;
+      --muted: #4a5568;
+      --accent1: #dc3545;
+      --accent2: #fd7e14;
+      --accent3: #0d6efd;
+      --accent4: #6610f2;
+      --glow: none;
+      --font-base: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
+      --font-size-base: 16px;
+    }
+
+    body[data-theme="light"] .chrome {
+      background: linear-gradient(145deg, #ffffff, #f8f9fa);
+      border-color: #dee2e6;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    body[data-theme="light"] .card {
+      background: #ffffff;
+      border: 1px solid #dee2e6;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    body[data-theme="light"] .btn {
+      background: linear-gradient(120deg, #0d6efd, #fd7e14, #dc3545);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(13,110,253,0.3);
+    }
+
+    body[data-theme="light"] .neon-input,
+    body[data-theme="light"] .select {
+      background: #ffffff;
+      color: #1a1a1a;
+      border: 2px solid #cbd5e1;
+    }
+
+    body[data-theme="light"] .theme-chip,
+    body[data-theme="light"] .font-chip,
+    body[data-theme="light"] .ui-theme-chip {
+      background: #ffffff;
+      color: #1a1a1a;
+      border: 1px solid #cbd5e1;
+    }
+
+    body[data-theme="light"] .theme-chip.active,
+    body[data-theme="light"] .font-chip.active,
+    body[data-theme="light"] .ui-theme-chip.active {
+      background: #e7f1ff !important;
+      color: #0d6efd !important;
+      border-color: #0d6efd !important;
+      box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.1) !important;
+      font-weight: 700 !important;
+    }
+
+    body[data-theme="light"] .pill,
+    body[data-theme="light"] .status-pill {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+    }
+
+    body[data-theme="light"] .status-pill strong {
+      color: #1a1a1a;
+    }
+
+    body[data-theme="light"] .debug-panel {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      color: #1a1a1a;
+    }
+
+    body[data-theme="light"] .debug-section label {
+      color: #1e293b;
+      font-weight: 600;
+    }
+
+    body[data-theme="light"] .status {
+      color: #334155;
+      font-weight: 500;
+    }
+
+    body[data-theme="light"] .status-dot {
+      background: radial-gradient(circle, #0d6efd 0%, #6610f2 70%);
+      box-shadow: 0 0 10px rgba(13,110,253,0.4);
+    }
+
+    body[data-theme="light"] .viewer-label {
+      color: #334155;
+      font-weight: 500;
+    }
+
+    body[data-theme="light"] .theme-preview {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    body[data-theme="light"] .font-preview {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #1a1a1a;
+    }
+
+    body[data-theme="light"] .font-preview-title {
+      color: #1a1a1a;
+    }
+
+    body[data-theme="light"] .font-preview-meta {
+      color: #334155;
+    }
+
+    body[data-theme="light"] header {
+      background: linear-gradient(90deg, rgba(13,110,253,0.04), rgba(253,126,20,0.03) 50%, rgba(102,16,242,0.04));
+      border-bottom-color: #dee2e6;
+    }
+
+    body[data-theme="light"] .title {
+      color: #1a1a1a;
+      text-shadow: none;
+    }
+
+    body[data-theme="light"] .title:hover {
+      color: #0d6efd;
+    }
+
+    body[data-theme="light"] .hint {
+      color: #334155;
+    }
+
+    body[data-theme="light"] .progress-card {
+      background: #ffffff;
+      border: 1px solid #dee2e6;
+    }
+
+    body[data-theme="light"] .progress-track {
+      background: #e9ecef;
+      border: 1px solid #dee2e6;
+    }
+
+    body[data-theme="light"] .progress-label {
+      color: #334155;
+    }
+
+    body[data-theme="light"] label {
+      color: #1e293b;
+    }
+
+    body[data-theme="contrast"] {
+      --bg: #000000;
+      --panel: #0d0d0d;
+      --grid: #1a1a1a;
+      --text: #ffffff;
+      --muted: #cfcfcf;
+      --accent1: #ffef00;
+      --accent2: #00eaff;
+      --accent3: #ff2f92;
+      --accent4: #ffffff;
+      --glow: 0 0 14px rgba(255,239,0,0.4), 0 0 24px rgba(0,234,255,0.35);
+      --font-base: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
+      --font-size-base: 16px;
+    }
+
+    /* Contrast theme specific styles */
+    body[data-theme="contrast"] .card {
+      background: linear-gradient(160deg, rgba(255,47,146,0.1), #0d0d0d 45%, rgba(0,234,255,0.1));
+      border: 2px solid #ffffff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+    
+    body[data-theme="contrast"] .btn {
+      background: linear-gradient(120deg, #ffef00, #00eaff, #ff2f92);
+      box-shadow: 0 8px 24px rgba(255,239,0,0.5);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent3) 20%, transparent), transparent 40%),
+                  radial-gradient(circle at 80% 30%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 38%),
+                  radial-gradient(circle at 30% 80%, color-mix(in srgb, var(--accent4) 18%, transparent), transparent 45%),
+                  var(--bg);
+      color: var(--text);
+      font-family: var(--font-base);
+      font-size: var(--font-size-base);
+      letter-spacing: 0.02em;
+      padding: 24px;
+    }
+
+    .chrome {
+      width: 100%;
+      max-width: 1200px;
+      background: linear-gradient(145deg, color-mix(in srgb, var(--accent4) 12%, var(--panel)) 0%, var(--panel) 40%, color-mix(in srgb, var(--accent3) 10%, var(--panel)) 100%);
+      border: 1px solid color-mix(in srgb, var(--grid) 80%, var(--panel));
+      border-radius: 24px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.03);
+      position: relative;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .chrome::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.25;
+      mask-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+      pointer-events: none;
+    }
+
+    header {
+      padding: 32px 36px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid #1c1c28;
+      background: linear-gradient(90deg, rgba(255,79,216,0.08), rgba(255,143,63,0.05) 50%, rgba(138,43,226,0.08));
+    }
+
+    .title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(14px, 2vw, 18px);
+      line-height: 1.4;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text);
+      text-shadow: 0 0 10px rgba(255,79,216,0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      -webkit-user-select: none;
+      user-select: none;
+      position: relative;
+      padding-right: 30px;
+      display: inline-block;
+    }
+
+    .title:hover {
+      color: var(--accent3);
+      transform: translateY(-1px);
+    }
+
+    .title::after {
+      content: '▼';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      opacity: 0.5;
+      transition: transform 0.3s ease;
+      font-family: monospace;
+    }
+
+    .title.debug-open::after {
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #ff8f3f 0%, #ff4fd8 70%);
+      box-shadow: 0 0 10px rgba(255,143,63,0.7);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.25); opacity: 0.5; }
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 24px 28px 32px;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .card {
+      background: linear-gradient(160deg, color-mix(in srgb, var(--accent3) 6%, var(--panel)), color-mix(in srgb, var(--panel) 90%, var(--grid)) 45%, color-mix(in srgb, var(--accent2) 6%, var(--panel)));
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      border-radius: 18px;
+      padding: 18px;
+      position: relative;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: -40% 30% auto -40%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255,79,216,0.65), rgba(255,143,63,0.65), transparent);
+      opacity: 0.6;
+      transform: skewX(-15deg);
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .hint {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+      opacity: 0.9;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .field-tight { gap: 12px; }
+
+    label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .neon-input {
+      position: relative;
+      border-radius: 12px;
+      padding: 14px 16px;
+      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
+      color: var(--text);
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      outline: none;
+      font-size: 16px;
+      font-family: var(--font-base);
+      z-index: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Use native number spinners */
+    .neon-input[type="number"] {
+      -moz-appearance: auto;
+      appearance: auto;
+      padding-right: 12px;
+    }
+
+    .neon-input:hover { 
+      background: color-mix(in srgb, var(--panel) 88%, var(--accent4) 5%); 
+      border-color: color-mix(in srgb, var(--accent4) 30%, var(--grid));
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .neon-input:focus { 
+      background: color-mix(in srgb, var(--panel) 82%, var(--accent3) 10%); 
+      border-color: var(--accent3);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent3) 20%, transparent);
+      transform: translateY(-1px);
+    }
+
+    .neon-input::placeholder { color: color-mix(in srgb, var(--muted) 80%, var(--text) 20%); }
+
+    .neon-input::before,
+    .neon-input::after { display: none; }
+
+    .glow-ring {
+      position: absolute;
+      inset: -2px;
+      border-radius: 14px;
+      padding: 2px;
+      background: linear-gradient(120deg, #ff6b6b, #ff8f3f, #ff4fd8, #8a2be2, #ff6b6b);
+      background-size: 300% 300%;
+      animation: borderFlow 6s ease infinite;
+      filter: drop-shadow(0 0 12px rgba(255,107,107,0.35));
+      z-index: -1;
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .input-wrap {
+      position: relative;
+      display: block;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .input-wrap input { width: 100%; background: transparent; }
+
+    .toggles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: #0e0e16;
+      border: 1px solid #1f1f2a;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .toggle span {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .error-hint {
+      color: var(--accent1);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      margin-top: -4px;
+      min-height: 16px;
+    }
+
+    .switch {
+      position: relative;
+      width: 58px;
+      height: 28px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #1c1c28, #0d0d14);
+      border: 1px solid #2b2b3d;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .switch input { display: none; }
+
+    .knob {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #e0e0ff 60%, #d0d0ff 100%);
+      box-shadow: var(--glow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .switch input:checked + .knob {
+      transform: translateX(28px);
+      background: radial-gradient(circle at 30% 30%, #fff1e0, #ffb878 60%, #ff6b6b 100%);
+      box-shadow: 0 0 14px rgba(255,143,63,0.6), 0 0 28px rgba(255,79,216,0.5);
+    }
+
+    .switch input:checked ~ .track-glow {
+      opacity: 1;
+    }
+
+    .track-glow {
+      position: absolute;
+      inset: -1px;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(255,79,216,0.35), rgba(255,143,63,0.35));
+      filter: blur(8px);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: -1;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px 24px;
+    }
+
+    .cta-row-tight {
+      padding: 12px 24px 0;
+    }
+
+    .cta-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      position: relative;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 18px;
+      background: linear-gradient(120deg, #ff4fd8, #ff8f3f, #ff6b6b);
+      background-size: 180% 180%;
+      color: #0c0c12;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(255,79,216,0.35);
+      text-transform: uppercase;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,79,216,0.45); }
+
+    .btn:active { transform: translateY(0); }
+
+    .btn.loading {
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    body[data-theme="light"] .status-pill {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 160px;
+      justify-content: center;
+    }
+
+    body[data-theme="light"] .status-pill strong {
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+
+    body[data-theme="light"] .pill {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+      font-weight: 500;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    body[data-theme="light"] .status {
+      color: #334155;
+      font-weight: 500;
+    }
+
+    body[data-theme="light"] .status-dot {
+      background: radial-gradient(circle, #0d6efd 0%, #6610f2 70%);
+      box-shadow: 0 0 10px rgba(13,110,253,0.4);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #26263a;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      min-width: 160px;
+      justify-content: center;
+    }
+
+    .status-pill strong { color: var(--text); font-weight: 700; }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(60deg, rgba(255,255,255,0.25), transparent 60%);
+      mix-blend-mode: screen;
+      opacity: 0;
+
+.btn:hover::after { opacity: 0.5; }
+
+.ui-theme-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+body[data-theme="light"] .ui-theme-chip {
+  background: #ffffff;
+  color: #1a1a1a;
+  border-color: #cbd5e1;
+}
+      gap: 8px;
+      margin-top: 8px;
+
+body[data-theme="light"] .ui-theme-chip:hover,
+body[data-theme="light"] .font-chip:hover,
+body[data-theme="light"] .theme-chip:hover {
+  background: #f8f9fa;
+  border-color: #0d6efd;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+body[data-theme="light"] .ui-theme-chip.active {
+  background: #e7f1ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.ui-theme-chip.active {
+  border-color: var(--accent3);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent3) 45%, transparent);
+  transform: translateY(-1px);
+}
+      transform: translateY(-1px);
+    }
+
+    .meters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .meter {
+      background: var(--panel);
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .meter label { display: flex; justify-content: space-between; }
+
+    .bar {
+      margin-top: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #1b1b28;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: var(--value, 50%);
+      background: linear-gradient(90deg, #ff4fd8, #ff8f3f, #ff6b6b);
+      background-size: 200% 200%;
+      animation: borderFlow 5s ease infinite;
+      box-shadow: 0 0 8px rgba(255,79,216,0.45);
+    }
+
+    .viewer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .output-img {
+      display: none;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .viewer-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      background: var(--panel);
+      padding: 12px;
+    }
+
+    .folder-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      width: 32px;
+      height: 32px;
+      padding: 6px;
+      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      border-radius: 8px;
+      color: var(--text);
+      cursor: pointer;
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .folder-btn:hover {
+      background: rgba(255,79,216,0.2);
+      color: var(--text);
+      border-color: #ff4fd8;
+      transform: scale(1.05);
+    }
+
+    .folder-btn svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 9999;
+    }
+
+    .toast {
+      min-width: 240px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #26263a;
+      background: #0d0d15;
+      color: var(--text);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .toast.success { border-color: #2fbf71; color: #d9ffe9; }
+    .toast.error { border-color: #ff6b6b; color: #ffe3e3; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .swap-btn {
+      align-self: center;
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .swap-btn:hover { background: color-mix(in srgb, var(--panel) 85%, var(--accent1) 5%); transform: translateY(-1px); }
+
+    .viewer-grid {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
+                        linear-gradient(0deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.22;
+      pointer-events: none;
+    }
+
+    .viewer-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(130deg, rgba(255,79,216,0.18) 0%, rgba(255,143,63,0.14) 40%, rgba(10,10,16,0.5) 70%);
+      mix-blend-mode: screen;
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .viewer-label {
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+
+    .progress-card {
+      background: linear-gradient(160deg, rgba(255,79,216,0.06), rgba(5,5,5,0.9) 45%, rgba(255,143,63,0.06));
+      border: 1px solid #1f1f2a;
+      border-radius: 18px;
+      padding: 14px 18px;
+      position: relative;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+      overflow: hidden;
+      margin: 0 0 12px 0;
+      width: 100%;
+    }
+
+    .progress-track {
+      position: relative;
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: #0f0f17;
+      border: 1px solid #26263a;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0;
+      width: 0%;
+      background: linear-gradient(120deg, #ff4fd8, #ff8f3f, #ff6b6b);
+      background-size: 220% 220%;
+      animation: borderFlow 4s ease infinite, shimmer 2s ease-in-out infinite;
+      box-shadow: 0 0 12px rgba(255,79,216,0.45);
+      transition: width 0.3s ease-out;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+
+    .progress-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .select {
+      appearance: none;
+      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
+      color: var(--text);
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: var(--font-base);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .select:hover {
+      background: color-mix(in srgb, var(--panel) 88%, var(--accent4) 5%);
+      border-color: var(--accent4);
+    }
+
+    .select:focus {
+      outline: none;
+      border-color: var(--accent3);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent3) 20%, transparent);
+    }
+
+    /* Light theme select fixes */
+    body[data-theme="light"] .select {
+      background: #ffffff;
+      color: #1a1a1a;
+      border: 2px solid #cbd5e1;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    body[data-theme="light"] .select::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(13,110,253,0.1), transparent);
+      transition: left 0.6s ease;
+      z-index: 1;
+    }
+    
+    body[data-theme="light"] .select:hover::before {
+      left: 100%;
+    }
+
+    body[data-theme="light"] .select:hover {
+      background: #ffffff;
+      border-color: #0d6efd;
+      box-shadow: 0 2px 8px rgba(13,110,253,0.15);
+    }
+    
+    body[data-theme="light"] .select:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+    }
+    .neon-input {
+      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
+      color: var(--text);
+      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: var(--font-base);
+      position: relative;
+      z-index: 2;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .inline-pair {
+      display: flex;
+      gap: 8px;
+    }
+
+    .flex-1 { flex: 1; }
+
+    .debug-panel {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 800px;
+      border: 1px solid #1f1f2a;
+      border-radius: 14px;
+      background: #0a0a12;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.03);
+      padding: 16px;
+      max-height: 300px;
+      overflow: auto;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      z-index: 1000;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .debug-section {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #1f1f2a;
+    }
+
+    .debug-section label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    body[data-theme="light"] .debug-section {
+      border-bottom-color: #cbd5e1;
+    }
+
+    .debug-entry.err { color: #ff6b6b; }
+
+    .theme-preview {
+      margin-top: 8px;
+      padding: 8px;
+      border: 1px solid #1f1f2a;
+      border-radius: 10px;
+      background: #0b0b11;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .theme-preview img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #26263a;
+    }
+
+    .theme-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .map-type-toggle {
+      display: flex;
+      gap: 4px;
+      margin-top: 8px;
+      background: #0d0d15;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid #26263a;
+    }
+
+    .map-type-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .map-type-btn:hover {
+      background: #26263a;
+    }
+
+    .map-type-btn.active {
+      background: var(--accent3);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(255,79,216,0.3);
+    }
+
+    .theme-chip {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #26263a;
+      background: #0d0d15;
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .theme-chip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .theme-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,79,216,0.3);
+      border-color: var(--accent3);
+    }
+
+    .theme-chip:hover::before {
+      transform: translateX(100%);
+    }
+
+    .theme-chip.active {
+      background: var(--accent3);
+      color: #ffffff;
+      border-color: var(--accent3);
+      box-shadow: 0 4px 16px rgba(255,79,216,0.4);
+    }
+
+    .font-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .font-chip {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #26263a;
+      background: #0d0d15;
+      color: var(--text);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .font-chip::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .font-chip:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,79,216,0.3);
+      border-color: var(--accent3);
+    }
+
+    .font-chip:hover::before {
+      transform: translateX(100%);
+    }
+
+    .font-chip.active {
+      background: var(--accent3);
+      color: #ffffff;
+      border-color: var(--accent3);
+      box-shadow: 0 4px 16px rgba(255,79,216,0.4);
+    }
+
+    .font-preview {
+      margin-top: 8px;
+      padding: 8px;
+      border: 1px solid #1f1f2a;
+      border-radius: 10px;
+      background: #0b0b11;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .font-preview-title {
+      font-size: 20px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .font-preview-meta {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 12px;
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (max-width: 640px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .cta-row { justify-content: flex-start; }
+      .panel-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 1400px) {
+      main {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1800px;
+        margin: 0 auto;
+      }
+      
+      .chrome {
+        max-width: 1800px;
+      }
+    }
+
+    @media (min-width: 1200px) and (max-width: 1399px) {
+      main {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chrome">
+    <header>
+      <div class="title" id="debug-toggle" title="Click to toggle debug log">Map Art Generator</div>
+      <div class="status"><span class="status-dot"></span>Systems Nominal · Output saves to /outputs</div>
+    </header>
+
+    <div class="progress-card">
+      <h3>Render Progress</h3>
+      <p class="hint">Tracks the current render pass. Use as a visual guide while maps generate.</p>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label"><span id="progress-text">Idle</span><span id="progress-value">0%</span></div>
+    </div>
+
+    <main class="panel-grid">
+      <div class="stack">
+        <div class="card card-tight">
+          <h3>Input Vector</h3>
+          <p class="hint">Enter the city + country for your map art (e.g., “Barcelona, Spain”). Press Enter or hit Execute to render.</p>
+          <div class="field">
+            <label for="city">City / Target</label>
+            <div class="input-wrap">
+              <div class="glow-ring"></div>
+              <input id="city" class="neon-input" placeholder="Barcelona, Spain" />
+            </div>
+            <div class="error-hint" id="city-error" aria-live="polite"></div>
+          </div>
+          <div class="field">
+            <div class="pill">Tip: Enter city, adjust controls, then Execute Pulse to render into /outputs</div>
+            <div class="cta-right">
+              <div class="status-pill" id="selection-pill">Theme: <strong id="pill-theme">feature_based</strong> · Font: <strong id="pill-font">Roboto</strong></div>
+              <button class="btn" id="execute-btn" disabled>Execute Pulse</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Output Viewer</h3>
+          <p class="hint">Newest map poster is saved to /outputs. Refresh after Execute to view the latest render.</p>
+          <div class="viewer">
+            <div class="viewer-frame">
+              <img id="output-img" class="output-img" />
+              <div class="viewer-grid"></div>
+              <div class="viewer-overlay"></div>
+              <button class="folder-btn" id="open-folder-btn" title="Open Output Folder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="viewer-label">Tip: Generated poster appears here after Execute. Filenames include city + theme + timestamp.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stack">
+        <div class="card">
+          <h3>Generation Controls</h3>
+          <p class="hint">Set generation parameters. Theme maps to CLI --theme; distance sets radius in meters; width/height are inches; format is output type.</p>
+          <div class="field field-tight">
+            <!-- Map Type removed: all themes available in one list -->
+            <div class="field">
+              <label>Theme</label>
+              <div class="theme-chip-row" id="theme-chips"></div>
+              <div class="theme-preview" id="theme-preview">Hover or select a theme to see its style notes.</div>
+            </div>
+            <div class="field">
+              <label>Paper Texture</label>
+              <select id="texture-select" class="neon-input select" title="Select paper texture for the map">
+                <option value="none">None</option>
+                <optgroup label="Base Papers">
+                  <option value="archival_cotton_rag">Archival Cotton Rag</option>
+                  <option value="cold_press_bright">Cold Press Bright</option>
+                  <option value="heavy_cold_press">Heavy Cold Press</option>
+                  <option value="white_linen_canvas">White Linen Canvas</option>
+                  <option value="stippled_gesso">Stippled Gesso</option>
+                  <option value="clean_stucco_wall">Clean Stucco Wall</option>
+                  <option value="white_recycled_bond">White Recycled Bond</option>
+                  <option value="clean_recycled_speckle">Clean Recycled Speckle</option>
+                  <option value="vintage_sage_cardstock">Vintage Sage Cardstock</option>
+                  <option value="wavy_gold_cardstock">Wavy Gold Cardstock</option>
+                  <option value="recycled_greyboard">Recycled Greyboard</option>
+                  <option value="recycled_bond_grey">Recycled Bond Grey</option>
+                  <option value="rough_grey_pulp">Rough Grey Pulp</option>
+                  <option value="slate_concrete">Slate Concrete</option>
+                  <option value="spalted_wood_grain">Spalted Wood Grain</option>
+                </optgroup>
+                <optgroup label="Specialty Papers">
+                  <option value="foxed_parchment">Foxed Parchment</option>
+                  <option value="folded_correspondence_a">Folded Correspondence A</option>
+                  <option value="folded_correspondence_b">Folded Correspondence B</option>
+                  <option value="pale_blue_folded">Pale Blue Folded</option>
+                  <option value="taped_spine_binding">Taped Spine Binding</option>
+                  <option value="water_damaged_ledger">Water Damaged Ledger</option>
+                  <option value="crumpled_tissue_beige">Crumpled Tissue Beige</option>
+                  <option value="raw_packing_kraft">Raw Packing Kraft</option>
+                  <option value="clean_kraft_cardstock">Clean Kraft Cardstock</option>
+                  <option value="oiled_kraft_dark">Oiled Kraft Dark</option>
+                  <option value="collage_scraps">Collage Scraps</option>
+                  <option value="corrugated_tear">Corrugated Tear</option>
+                  <option value="forest_buckram">Forest Buckram</option>
+                  <option value="crimson_library_cloth">Crimson Library Cloth</option>
+                  <option value="antique_book_cloth">Antique Book Cloth</option>
+                  <option value="bronze_suede_sepia">Bronze Suede Sepia</option>
+                  <option value="dark_weave_charcoal">Dark Weave Charcoal</option>
+                </optgroup>
+                <optgroup label="Artistic Effects">
+                  <option value="gothic_ink_frame">Gothic Ink Frame</option>
+                  <option value="wet_wash_watercolor">Wet Wash Watercolor</option>
+                  <option value="split_tone_wall_overlay">Split Tone Wall Overlay</option>
+                  <option value="frosted_acetate">Frosted Acetate</option>
+                  <option value="spray_noise_overlay">Spray Noise Overlay</option>
+                  <option value="high_contrast_stone">High Contrast Stone</option>
+                  <option value="metallic_gold_grain">Metallic Gold Grain</option>
+                  <option value="film_grain_gradient">Film Grain Gradient</option>
+                </optgroup>
+                <optgroup label="Stains & Decay">
+                  <option value="heavy_coffee_staining">Heavy Coffee Staining</option>
+                  <option value="black_mold_decay">Black Mold Decay</option>
+                  <option value="white_lead_decay">White Lead Decay</option>
+                  <option value="industrial_slate_decay">Industrial Slate Decay</option>
+                  <option value="urban_concrete_decay">Urban Concrete Decay</option>
+                </optgroup>
+                <optgroup label="Edge Treatments">
+                  <option value="crushed_bond_white">Crushed Bond White</option>
+                  <option value="crushed_bond_var_a">Crushed Bond Var A</option>
+                  <option value="crushed_bond_var_b">Crushed Bond Var B</option>
+                </optgroup>
+              </select>
+            </div>
+            <!-- Map Style removed: only real OpenStreetMap data supported -->
+            <div class="field">
+              <label>Map Shape</label>
+              <select id="map-shape" class="neon-input select" title="Choose map shape">
+                <option value="rectangle">Rectangle</option>
+                <option value="circle">Circle</option>
+                <option value="triangle">Triangle</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Artistic Effect</label>
+              <select id="artistic-effect" class="neon-input select" title="Apply artistic effects to the map">
+                <option value="none">None</option>
+                <option value="watercolor">Watercolor</option>
+                <option value="pencil_sketch">Pencil Sketch</option>
+                <option value="oil_painting">Oil Painting</option>
+                <option value="vintage">Vintage</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Color Enhancement</label>
+              <select id="color-enhancement" class="neon-input select" title="Apply intelligent color enhancement">
+                <option value="none">None</option>
+                <option value="intelligent_palette">Intelligent Palette</option>
+                <option value="geographic_colors">Geographic Colors</option>
+                <option value="seasonal_summer">Summer Colors</option>
+                <option value="seasonal_autumn">Autumn Colors</option>
+                <option value="seasonal_winter">Winter Colors</option>
+                <option value="seasonal_spring">Spring Colors</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="format">Format</label>
+              <div class="input-wrap"><div class="glow-ring"></div>
+                <select id="format" class="neon-input select">
+                  <option value="png">PNG</option>
+                  <option value="jpg">JPG</option>
+                  <option value="jpeg">JPEG</option>
+                  <option value="tiff">TIFF</option>
+                  <option value="svg">SVG</option>
+                  <option value="pdf">PDF</option>
+                  <option value="eps">EPS</option>
+                  <option value="ps">PostScript</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="distance">Distance (m)</label>
+              <div class="input-wrap">
+                <div class="glow-ring"></div>
+                <input id="distance" class="neon-input" type="number" value="29000" min="1000" step="500" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="size">Size (W x H inches)</label>
+              <div class="inline-pair">
+                <div class="input-wrap flex-1">
+                  <div class="glow-ring"></div>
+                  <input id="width" class="neon-input" type="number" value="12" title="Width in inches" placeholder="12" min="1" step="0.5" />
+                </div>
+                <div class="input-wrap flex-1">
+                  <div class="glow-ring"></div>
+                  <input id="height" class="neon-input" type="number" value="16" title="Height in inches" placeholder="16" min="1" step="0.5" />
+                </div>
+                <button class="swap-btn" id="swap-size" type="button">Swap</button>
+              </div>
+            </div>
+            <div class="field">
+              <label>Font</label>
+              <div class="font-chip-row" id="font-chips"></div>
+              <div class="font-preview" id="font-preview">Hover or select a font to see how it looks.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div class="debug-panel" id="debug-panel">
+    <div class="debug-section">
+      <label>UI Theme</label>
+      <div class="ui-theme-row" id="ui-theme-chips"></div>
+    </div>
+    <div class="debug-entry">Debug log ready.</div>
+    <div id="debug-log"></div>
+  </div>
+  
+  <div class="toast-container" id="toast-container"></div>
+
+  <script>
+    const cityInput = document.getElementById('city');
+    const themeChips = document.getElementById('theme-chips');
+    const themePreview = document.getElementById('theme-preview');
+    const fontChips = document.getElementById('font-chips');
+    const fontPreview = document.getElementById('font-preview');
+    const uiThemeChips = document.getElementById('ui-theme-chips');
+    const textureSelect = document.getElementById('texture-select');
+    // mapStyleSelect removed
+    const mapShapeSelect = document.getElementById('map-shape');
+    const artisticEffectSelect = document.getElementById('artistic-effect');
+    const colorEnhancementSelect = document.getElementById('color-enhancement');
+    // mapTypeToggle removed
+    const distanceInput = document.getElementById('distance');
+    const widthInput = document.getElementById('width');
+    const heightInput = document.getElementById('height');
+    const formatInput = document.getElementById('format');
+    const executeBtn = document.getElementById('execute-btn');
+    const cityError = document.getElementById('city-error');
+    const selectionPill = document.getElementById('selection-pill');
+    const pillTheme = document.getElementById('pill-theme');
+    const pillFont = document.getElementById('pill-font');
+    const toastContainer = document.getElementById('toast-container');
+    const swapSizeBtn = document.getElementById('swap-size');
+
+    let selectedTheme = 'feature_based';
+    let selectedFont = 'Roboto';
+    let selectedTexture = 'none';
+    // selectedMapStyle removed - only real maps
+    let selectedMapShape = 'rectangle';
+    let selectedArtisticEffect = 'none';
+    let selectedColorEnhancement = 'none';
+    let selectedMapType = 'modern';
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const progressValue = document.getElementById('progress-value');
+    const debugPanel = document.getElementById('debug-panel');
+    const debugLog = document.getElementById('debug-log');
+    const debugToggle = document.getElementById('debug-toggle');
+    const outputImg = document.getElementById('output-img');
+    const viewerFrame = document.querySelector('.viewer-frame');
+
+    const setProgress = (pct, text) => {
+      progressFill.style.width = `${pct}%`;
+      progressValue.textContent = `${pct}%`;
+      progressText.textContent = text;
+    };
+
+    const showToast = (type, message) => {
+      if (!toastContainer) return;
+      const div = document.createElement('div');
+      div.className = `toast ${type}`;
+      div.textContent = message;
+      toastContainer.appendChild(div);
+      setTimeout(() => {
+        div.style.opacity = '0';
+        div.style.transform = 'translateY(-4px)';
+        setTimeout(() => div.remove(), 200);
+      }, 2200);
+    };
+
+    const parseCityCountry = (input) => {
+      if (!input) return { city: '', country: '' };
+      const parts = input.split(',').map(p => p.trim()).filter(Boolean);
+      if (parts.length === 1) {
+        // If only city is provided, assume USA for common US cities
+        const city = parts[0];
+        const commonUSCities = ['Raleigh', 'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver', 'Washington', 'Boston', 'El Paso', 'Nashville', 'Detroit', 'Oklahoma City', 'Portland', 'Las Vegas', 'Memphis', 'Louisville', 'Milwaukee', 'Baltimore', 'Albuquerque', 'Tucson', 'Fresno', 'Sacramento', 'Kansas City', 'Mesa', 'Atlanta', 'Omaha', 'Colorado Springs', 'Raleigh', 'Long Beach', 'Virginia Beach', 'Miami', 'Oakland', 'Minneapolis', 'Tampa', 'Tulsa', 'Arlington', 'Wichita', 'New Orleans', 'Bakersfield', 'Tampa', 'Honolulu', 'Anaheim', 'Santa Ana', 'Riverside', 'Corpus Christi', 'Lexington', 'Henderson', 'Stockton', 'St. Paul', 'Cincinnati', 'Greensboro', 'Pittsburgh', 'Lincoln', 'Anchorage', 'Plano', 'Orlando', 'Irvine', 'Newark', 'Durham', 'Chula Vista', 'Fort Wayne', 'Chandler', 'Laredo', 'Norfolk', 'Madison', 'Lubbock', 'Scottsdale', 'Garland', 'Gilbert', 'Reno', 'Glendale', 'Buffalo', 'North Las Vegas', 'Hialeah', 'Winston Salem', 'Chesapeake', 'Fremont', 'Irving', 'El Paso', 'Greensboro'];
+        return { 
+          city, 
+          country: commonUSCities.includes(city) ? 'USA' : ''
+        };
+      }
+      
+      // Handle US states: if last part is a US state abbreviation, treat the next part as the country
+      const usStates = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'];
+      
+      if (parts.length >= 3) {
+        const secondToLast = parts[parts.length - 2].toUpperCase();
+        const last = parts[parts.length - 1].toUpperCase();
+        
+        // Check if we have "City, State, Country" format
+        if (usStates.includes(secondToLast) && (last === 'USA' || last === 'US' || last === 'UNITED STATES')) {
+          return { 
+            city: parts[0], 
+            country: last === 'US' ? 'USA' : last,
+            state: secondToLast
+          };
+        }
+      }
+      
+      // Default: join everything after the city as country
+      return { city: parts[0], country: parts.slice(1).join(', ') };
+    };
+
+    window.electronAPI?.onRenderProgress?.(({ pct, text }) => {
+      if (typeof pct === 'number') {
+        setProgress(Math.max(0, Math.min(100, Math.round(pct))), text || '');
+      }
+      // When done, load the newest PNG
+      if (pct >= 100 && outputImg) {
+        setTimeout(async () => {
+          const newestPath = await window.electronAPI.getNewestPoster();
+          if (newestPath) {
+            const fileUrl = 'file:///' + newestPath.replace(/\\/g, '/');
+            outputImg.src = fileUrl;
+            outputImg.style.display = 'block';
+            if (debugLog) {
+              const div = document.createElement('div');
+              div.className = 'debug-entry';
+              div.textContent = `Loading poster: ${fileUrl}`;
+              debugLog.appendChild(div);
+              debugLog.scrollTop = debugLog.scrollHeight;
+            }
+          } else {
+            if (debugLog) {
+              const div = document.createElement('div');
+              div.className = 'debug-entry err';
+              div.textContent = 'No poster file found to display.';
+              debugLog.appendChild(div);
+              debugLog.scrollTop = debugLog.scrollHeight;
+            }
+          }
+        }, 500);
+      }
+    });
+
+    window.electronAPI?.onRenderLog?.((entry) => {
+      if (!debugLog || !entry) return;
+      const div = document.createElement('div');
+      div.className = `debug-entry ${entry.type === 'err' ? 'err' : ''}`;
+      div.textContent = entry.chunk ?? '';
+      debugLog.appendChild(div);
+      debugLog.scrollTop = debugLog.scrollHeight;
+    });
+
+    const themesMeta = {
+      feature_based: { desc: 'Classic black/white with road hierarchy.', img: 'posters/new_york_feature_based_20260124_034913.jpg' },
+      gradient_roads: { desc: 'Smooth gradients across primary roads.', img: 'posters/new_york_gradient_roads_20260124_034936.jpg' },
+      contrast_zones: { desc: 'High-contrast density shading.', img: 'posters/new_york_contrast_zones_20260124_034856.jpg' },
+      noir: { desc: 'True black backdrop, white roads.', img: 'posters/new_york_noir_20260124_035137.jpg' },
+      midnight_blue: { desc: 'Navy base with warm gold strokes.', img: 'posters/new_york_midnight_blue_20260124_035005.jpg' },
+      blueprint: { desc: 'Blueprint lines on cool blue.', img: 'posters/new_york_blueprint_20260124_034844.jpg' },
+      neon_cyberpunk: { desc: 'Electric pink/cyan on dark.', img: 'posters/new_york_neon_cyberpunk_20260124_035021.jpg' },
+      warm_beige: { desc: 'Vintage beige paper feel.', img: 'posters/new_york_warm_beige_20260124_035125.jpg' },
+      pastel_dream: { desc: 'Soft pastel palette.', img: 'posters/new_york_pastel_dream_20260124_034941.jpg' },
+      japanese_ink: { desc: 'Minimal ink wash aesthetic.', img: 'posters/new_york_japanese_ink_20260124_034950.jpg' },
+      forest: { desc: 'Deep greens and sage.', img: 'posters/new_york_forest_20260124_034924.jpg' },
+      ocean: { desc: 'Cool blues and teals.', img: 'posters/new_york_ocean_20260124_035032.jpg' },
+      terracotta: { desc: 'Mediterranean terracotta warmth.', img: 'posters/new_york_terracotta_20260124_035110.jpg' },
+      sunset: { desc: 'Oranges and pinks inspired by dusk.', img: 'posters/new_york_sunset_20260124_035101.jpg' },
+      autumn: { desc: 'Burnt oranges and reds.', img: 'posters/new_york_autumn_20260124_034839.jpg' },
+      copper_patina: { desc: 'Oxidized copper tones.', img: 'posters/new_york_copper_patina_20260124_034901.jpg' },
+      monochrome_blue: { desc: 'Single-family blue monochrome.', img: 'posters/new_york_monochrome_blue_20260124_035015.jpg' },
+      // New themes
+      arctic_aurora: { desc: 'Northern lights with deep blue and aurora colors.', img: 'posters/new_york_arctic_aurora_20260124_034828.jpg' },
+      mars_colony: { desc: 'Red planet aesthetic with rusty oranges.', img: 'posters/new_york_mars_colony_20260124_034956.jpg' },
+      enchanted_forest: { desc: 'Deep greens with bioluminescent accents.', img: 'posters/new_york_enchanted_forest_20260124_035907.jpg' },
+      vintage_sepia: { desc: 'Old-world map with aged paper tones.', img: 'posters/new_york_vintage_sepia_20260124_035120.jpg' },
+      candy_land: { desc: 'Playful pastel colors like candy.', img: 'posters/new_york_candy_land_20260124_034849.jpg' },
+      matrix_code: { desc: 'Digital rain effect with greens on black.', img: 'posters/new_york_matrix_code_20260124_035001.jpg' },
+      sunset_boulevard: { desc: 'LA sunset vibes with warm gradients.', img: 'posters/new_york_sunset_boulevard_20260124_035106.jpg' },
+      ice_crystal: { desc: 'Frozen crystalline appearance.', img: 'posters/new_york_ice_crystal_20260124_034940.jpg' },
+      toxic_waste: { desc: 'Industrial hazard warning colors.', img: 'posters/new_york_toxic_waste_20260124_035115.jpg' },
+      royal_purple: { desc: 'Regal luxury with deep purples and golds.', img: 'posters/new_york_royal_purple_20260124_035056.jpg' },
+      watercolor: { desc: 'Soft, flowing watercolor aesthetic with artistic colors.', img: 'posters/new_york_watercolor_20260124_035130.jpg' },
+      pencil_sketch: { desc: 'Hand-drawn pencil sketch with grayscale tones.', img: 'posters/new_york_pencil_sketch_20260124_034946.jpg' },
+      ink_wash: { desc: 'East Asian ink wash art with black ink gradients.', img: 'posters/new_york_ink_wash_20260124_034945.jpg' },
+      oil_paint: { desc: 'Rich oil painting with vibrant colors and brush strokes.', img: 'posters/new_york_oil_paint_20260124_035037.jpg' },
+      // Geographic themes
+      mountain_watercolor: { desc: 'Soft watercolors perfect for mountain regions with elevation-based coloring.', img: 'posters/new_york_mountain_watercolor_20260124_035719.jpg' },
+      coastal_nautical: { desc: 'Nautical chart style with blues and sea-themed colors.', img: 'posters/new_york_coastal_nautical_20260124_035700.jpg' },
+      desert_oasis: { desc: 'Warm desert colors with oasis highlights.', img: 'posters/new_york_desert_oasis_20260124_035646.jpg' },
+      forest_enchanted: { desc: 'Lush forest theme with mystical green tones.', img: 'posters/new_york_forest_enchanted_20260124_035714.jpg' },
+      fantasy_ancient: { desc: 'Aged fantasy map with mystical elements.', img: 'posters/new_york_fantasy_ancient_20260124_035710.jpg' },
+      // Historical themes
+      roman_britain: { desc: 'Imperial Roman roads with terracotta and gold.', img: 'posters/new_york_roman_britain_20260124_035051.jpg' },
+      feudal_japan: { desc: 'Traditional ink wash aesthetic.', img: 'posters/new_york_feudal_japan_20260124_034918.jpg' },
+      ming_dynasty: { desc: 'Imperial China with forbidden city colors.', img: 'posters/new_york_ming_dynasty_20260124_035010.jpg' },
+      american_revolution: { desc: 'Colonial America with patriotic colors.', img: 'posters/new_york_american_revolution_20260124_034822.jpg' },
+      gold_rush: { desc: 'Wild West with gold and frontier colors.', img: 'posters/new_york_gold_rush_20260124_034930.jpg' },
+    };
+
+    const fontsList = [
+      'Roboto', 'Open Sans', 'Montserrat', 'Playfair Display', 'Oswald', 'Raleway', 'Lato', 'Bebas Neue', 'Anton', 'Rubik',
+      'Arial', 'Helvetica', 'Times New Roman', 'Georgia', 'Verdana', 'Courier New', 'Impact', 'Comic Sans MS'
+    ];
+
+    const renderThemePreview = (key) => {
+      if (themePreview && themesMeta[key]) {
+        const meta = themesMeta[key];
+        const img = new Image();
+        img.onload = () => {
+          themePreview.innerHTML = `<img src="${meta.img}" alt="${key}" /><div>${key}: ${meta.desc}</div>`;
+        };
+        img.onerror = () => {
+          // Fallback to a working image if the preview is broken
+          themePreview.innerHTML = `<img src="posters/new_york_feature_based_20260124_034913.jpg" alt="${key}" /><div>${key}: ${meta.desc}</div>`;
+        };
+        img.src = meta.img;
+      }
+    };
+
+    // Theme categories
+    const themeCategories = {
+      modern: [
+        'feature_based', 'gradient_roads', 'contrast_zones', 'noir', 'midnight_blue', 
+        'blueprint', 'neon_cyberpunk', 'warm_beige', 'pastel_dream', 'japanese_ink',
+        'forest', 'ocean', 'terracotta', 'sunset', 'autumn', 'copper_patina', 
+        'monochrome_blue', 'arctic_aurora', 'mars_colony', 'enchanted_forest',
+        'vintage_sepia', 'candy_land', 'matrix_code', 'sunset_boulevard', 
+        'ice_crystal', 'toxic_waste', 'royal_purple', 'watercolor', 'pencil_sketch',
+        'ink_wash', 'oil_paint', 'mountain_watercolor', 'coastal_nautical', 
+        'desert_oasis', 'forest_enchanted', 'fantasy_ancient'
+      ],
+      historical: [
+        'roman_britain', 'feudal_japan', 'ming_dynasty', 'american_revolution', 'gold_rush'
+      ],
+      fictional: []
+    };
+
+    const renderThemes = (mapType) => {
+      if (!themeChips) return;
+      themeChips.innerHTML = '';
+      
+      const themes = themeCategories[mapType] || themeCategories.modern;
+      themes.forEach((key) => {
+        if (themesMeta[key]) {
+          const chip = document.createElement('div');
+          chip.className = 'theme-chip';
+          chip.textContent = key;
+          chip.addEventListener('mouseenter', () => renderThemePreview(key));
+          chip.addEventListener('click', () => {
+            selectedTheme = key;
+            document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            renderThemePreview(key);
+            if (pillTheme) pillTheme.textContent = key;
+          });
+          themeChips.appendChild(chip);
+        }
+      });
+      
+      // Set initial selection
+      const firstChip = themeChips.querySelector('.theme-chip');
+      if (firstChip) {
+        firstChip.classList.add('active');
+      }
+    };
+
+    // Initial render
+    renderThemes('modern');
+
+    const renderFontPreview = (font) => {
+      if (fontPreview) {
+        fontPreview.innerHTML = '';
+        const title = document.createElement('div');
+        title.className = 'font-preview-title';
+        title.textContent = 'The quick brown fox';
+        title.style.fontFamily = `'${font}', sans-serif`;
+        const meta = document.createElement('div');
+        meta.className = 'font-preview-meta';
+        meta.textContent = `ABCDEF 123456 ${font}`;
+        meta.style.fontFamily = `'${font}', sans-serif`;
+        fontPreview.appendChild(title);
+        fontPreview.appendChild(meta);
+      }
+    };
+
+    if (fontChips) {
+      fontsList.forEach((font) => {
+        const chip = document.createElement('div');
+        chip.className = 'font-chip';
+        chip.textContent = font;
+        chip.style.fontFamily = `'${font}', sans-serif`;
+        chip.addEventListener('mouseenter', () => renderFontPreview(font));
+        chip.addEventListener('click', () => {
+          selectedFont = font;
+          document.querySelectorAll('.font-chip').forEach(c => c.style.background = '#0d0d15');
+          chip.style.background = '#26263a';
+          renderFontPreview(font);
+          if (pillFont) pillFont.textContent = font;
+        });
+        fontChips.appendChild(chip);
+      });
+      // Set initial selection
+      const firstFontChip = fontChips.querySelector('.font-chip');
+      if (firstFontChip) {
+        firstFontChip.style.background = '#26263a';
+        renderFontPreview(selectedFont);
+        if (pillFont) pillFont.textContent = selectedFont;
+      }
+    }
+
+    if (debugToggle && debugPanel) {
+      debugToggle.addEventListener('click', () => {
+        const visible = debugPanel.style.display === 'block';
+        debugPanel.style.display = visible ? 'none' : 'block';
+        debugToggle.classList.toggle('debug-open', !visible);
+        
+        // Close debug panel when clicking outside
+        if (!visible) {
+          const closeDebug = (e) => {
+            if (!debugPanel.contains(e.target) && !debugToggle.contains(e.target)) {
+              debugPanel.style.display = 'none';
+              debugToggle.classList.remove('debug-open');
+              document.removeEventListener('click', closeDebug);
+            }
+          };
+          setTimeout(() => {
+            document.addEventListener('click', closeDebug);
+          }, 100);
+        }
+      });
+    }
+
+    // Open outputs folder
+    const openOutputsFolder = async () => {
+      if (window.electronAPI?.openFolder) {
+        try {
+          await window.electronAPI.openFolder('outputs');
+        } catch (err) {
+          console.error('Failed to open outputs folder:', err);
+        }
+      }
+    };
+
+    // Click handler for the "Open Folder" button
+    const openFolderBtn = document.getElementById('open-folder-btn');
+    if (openFolderBtn) {
+      openFolderBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openOutputsFolder();
+      });
+    }
+
+    // Right-click context menu on viewer
+    if (viewerFrame) {
+      viewerFrame.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        openOutputsFolder();
+      });
+    }
+
+    const updateExecuteState = () => {
+      const raw = cityInput?.value?.trim();
+      const { city, country } = parseCityCountry(raw);
+      // Allow execution if city is provided (country can be auto-detected)
+      const valid = !!city;
+      executeBtn.disabled = !valid;
+      if (!valid && cityError) {
+        cityError.textContent = 'Please enter a city name';
+      } else if (cityError) {
+        cityError.textContent = '';
+      }
+    };
+
+    const saveInputs = () => {
+      const payload = {
+        city: cityInput?.value || '',
+        distance: distanceInput?.value || '29000',
+        width: widthInput?.value || '12',
+        height: heightInput?.value || '16',
+        format: formatInput?.value || 'png',
+        theme: selectedTheme,
+        font: selectedFont,
+        texture: selectedTexture,
+        mapStyle: selectedMapStyle,
+        mapShape: selectedMapShape,
+      };
+      try { localStorage.setItem('mapgen.form', JSON.stringify(payload)); } catch (e) { /* ignore */ }
+    };
+
+    const loadInputs = () => {
+      try {
+        const raw = localStorage.getItem('mapgen.form');
+        if (!raw) return;
+        const data = JSON.parse(raw);
+        if (data.city) cityInput.value = data.city;
+        if (data.distance) distanceInput.value = data.distance;
+        if (data.width) widthInput.value = data.width;
+        if (data.height) heightInput.value = data.height;
+        if (data.format) formatInput.value = data.format;
+        if (data.theme && themesMeta[data.theme]) selectedTheme = data.theme;
+        if (data.font && fontsList.includes(data.font)) selectedFont = data.font;
+        if (data.texture) {
+          selectedTexture = data.texture;
+          if (textureSelect) textureSelect.value = data.texture;
+        }
+        if (data.mapStyle) {
+          selectedMapStyle = data.mapStyle;
+          if (mapStyleSelect) mapStyleSelect.value = data.mapStyle;
+        }
+        if (data.mapShape) {
+          selectedMapShape = data.mapShape;
+          if (mapShapeSelect) mapShapeSelect.value = data.mapShape;
+        }
+      } catch (e) { /* ignore */ }
+    };
+
+    // Texture change handler
+    textureSelect?.addEventListener('change', (e) => {
+      selectedTexture = e.target.value;
+    });
+
+    // Map style handler removed
+
+    // Map shape change handler
+    mapShapeSelect?.addEventListener('change', (e) => {
+      selectedMapShape = e.target.value;
+    });
+
+    // Artistic effect change handler
+    artisticEffectSelect?.addEventListener('change', (e) => {
+      selectedArtisticEffect = e.target.value;
+    });
+
+    // Color enhancement change handler
+    colorEnhancementSelect?.addEventListener('change', (e) => {
+      selectedColorEnhancement = e.target.value;
+    });
+
+    const runExecute = async () => {
+      const raw = cityInput?.value?.trim();
+      const { city, country, state } = parseCityCountry(raw);
+      if (!city) {
+        setProgress(0, 'Enter a city name');
+        if (cityError) cityError.textContent = 'Please enter a city name';
+        return;
+      }
+
+      // If no country was detected, default to USA
+      const finalCountry = country || 'USA';
+      
+      if (!window.electronAPI?.generateMap) {
+        setProgress(0, 'Electron API unavailable');
+        return;
+      }
+
+      if (cityError) cityError.textContent = '';
+      executeBtn.disabled = true;
+      executeBtn.classList.add('loading');
+      const originalLabel = executeBtn.textContent;
+      executeBtn.textContent = 'Executing…';
+      setProgress(8, 'Starting generator…');
+
+      try {
+        const distance = distanceInput?.value?.trim() || '29000';
+        const width = widthInput?.value?.trim() || '12';
+        const height = heightInput?.value?.trim() || '16';
+        const format = formatInput?.value?.trim() || 'png';
+        await window.electronAPI.generateMap({
+          city,
+          country: finalCountry,
+          ...(state && { state }),
+          theme: selectedTheme,
+          distance,
+          width,
+          height,
+          format,
+          font: selectedFont,
+          texture: selectedTexture,
+          // mapStyle removed
+          mapShape: selectedMapShape,
+          artisticEffect: selectedArtisticEffect,
+          colorEnhancement: selectedColorEnhancement,
+        });
+        setProgress(100, 'Done. Check /outputs for the PNG');
+        showToast('success', 'Render finished. Check /outputs');
+      } catch (err) {
+        console.error(err);
+        setProgress(0, 'Error: see console');
+        showToast('error', 'Render failed. See console');
+      } finally {
+        setTimeout(() => { setProgress(0, 'Idle'); executeBtn.disabled = false; }, 800);
+        executeBtn.classList.remove('loading');
+        executeBtn.textContent = originalLabel;
+        saveInputs();
+        updateExecuteState();
+      }
+    };
+
+    executeBtn?.addEventListener('click', runExecute);
+    const attachEnterToExecute = (el) => {
+      if (!el) return;
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          runExecute();
+        }
+      });
+    };
+
+    [cityInput, distanceInput, widthInput, heightInput, formatInput, textureSelect].forEach(el => {
+      attachEnterToExecute(el);
+      el?.addEventListener('input', () => { updateExecuteState(); saveInputs(); });
+      el?.addEventListener('change', () => { updateExecuteState(); saveInputs(); });
+    });
+
+    if (swapSizeBtn) {
+      swapSizeBtn.addEventListener('click', () => {
+        const w = widthInput.value;
+        widthInput.value = heightInput.value;
+        heightInput.value = w;
+        saveInputs();
+      });
+    }
+
+    loadInputs();
+    updateExecuteState();
+    if (pillTheme) pillTheme.textContent = selectedTheme;
+    if (pillFont) pillFont.textContent = selectedFont;
+
+    // UI Theme switching
+    const uiThemes = [
+      { key: 'synth', label: 'Synth Wave' },
+      { key: 'dark', label: 'Dark' },
+      { key: 'light', label: 'Light' },
+      { key: 'contrast', label: 'High Contrast' },
+    ];
+
+    const applyUiTheme = (key) => {
+      document.body.setAttribute('data-theme', key);
+      try { localStorage.setItem('mapgen.uiTheme', key); } catch (e) { /* ignore */ }
+      if (!uiThemeChips) return;
+      uiThemeChips.querySelectorAll('.ui-theme-chip').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.key === key);
+      });
+    };
+
+    if (uiThemeChips) {
+      uiThemes.forEach(({ key, label }) => {
+        const chip = document.createElement('div');
+        chip.className = 'ui-theme-chip';
+        chip.dataset.key = key;
+        chip.textContent = label;
+        chip.addEventListener('click', () => applyUiTheme(key));
+        uiThemeChips.appendChild(chip);
+      });
+
+      let savedTheme = 'synth';
+      try { savedTheme = localStorage.getItem('mapgen.uiTheme') || 'synth'; } catch (e) { /* ignore */ }
+      if (!uiThemes.find(t => t.key === savedTheme)) savedTheme = 'synth';
+      applyUiTheme(savedTheme);
+    }
+
+    // Set initial idle state
+    setProgress(0, 'Idle');
+  </script>
+</body>
+</html>

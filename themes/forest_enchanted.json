@@ -1,0 +1,56 @@
+{
+  "name": "Forest Enchanted",
+  "bg": "#F5FFF5",
+  "text": "#2F4F4F",
+  "gradient_color": "#F5FFF5",
+  "category": "geographic",
+  "geographic_context": "forest",
+  "description": "Lush forest theme with mystical green tones",
+  "colors": {
+    "background": "#F5FFF5",
+    "water": "#4682B4",
+    "land": [
+      "#228B22",
+      "#32CD32",
+      "#00FF00"
+    ],
+    "forest": [
+      "#006400",
+      "#228B22",
+      "#2E8B57"
+    ],
+    "meadow": [
+      "#90EE90",
+      "#98FB98",
+      "#8FBC8F"
+    ],
+    "urban": "#8B7D6B",
+    "roads": "#654321",
+    "labels": "#2F4F4F",
+    "road_motorway": "#2F4F4F",
+    "road_primary": "#404040",
+    "road_secondary": "#606060",
+    "road_tertiary": "#808080",
+    "road_residential": "#A0A0A0",
+    "road_default": "#808080",
+    "parks": "#90EE90"
+  },
+  "forest_colors": {
+    "deep_woods": "#006400",
+    "light_woods": "#228B22",
+    "clearing": "#90EE90",
+    "undergrowth": "#2E8B57"
+  },
+  "texture_overlay": "watercolor_paper.png",
+  "texture_intensity": 0.35,
+  "edge_treatment": "soft_edges",
+  "edge_softness": 0.9,
+  "adaptive_colors": true,
+  "style": {
+    "line_width": 1.5,
+    "road_style": "curved",
+    "label_size": "medium",
+    "label_style": "normal",
+    "show_tree_symbols": true
+  }
+}

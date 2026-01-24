@@ -1,0 +1,15 @@
+{
+  "name": "Matrix Code",
+  "description": "Digital rain effect with greens on black",
+  "bg": "#000000",
+  "text": "#00FF00",
+  "gradient_color": "#000000",
+  "water": "#050A05",
+  "parks": "#0A1A0A",
+  "road_motorway": "#00FF00",
+  "road_primary": "#00DD00",
+  "road_secondary": "#00BB00",
+  "road_tertiary": "#009900",
+  "road_residential": "#007700",
+  "road_default": "#00BB00"
+}

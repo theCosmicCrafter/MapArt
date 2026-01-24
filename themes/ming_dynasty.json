@@ -1,0 +1,15 @@
+{
+  "name": "Ming Dynasty",
+  "description": "Imperial China with forbidden city colors - yellow, red, and black",
+  "bg": "#FFF8DC",
+  "text": "#8B0000",
+  "gradient_color": "#FFF8DC",
+  "water": "#4682B4",
+  "parks": "#2E8B57",
+  "road_motorway": "#FFD700",
+  "road_primary": "#DC143C",
+  "road_secondary": "#B22222",
+  "road_tertiary": "#8B4513",
+  "road_residential": "#D2691E",
+  "road_default": "#A0522D"
+}

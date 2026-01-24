@@ -1,0 +1,15 @@
+{
+  "name": "Roman Britain",
+  "description": "Imperial roads and Roman colors - terracotta, gold, and purple",
+  "bg": "#F5E6D3",
+  "text": "#8B4513",
+  "gradient_color": "#F5E6D3",
+  "water": "#4A90A4",
+  "parks": "#7CB342",
+  "road_motorway": "#CD853F",
+  "road_primary": "#FFD700",
+  "road_secondary": "#B8860B",
+  "road_tertiary": "#DAA520",
+  "road_residential": "#DEB887",
+  "road_default": "#D2691E"
+}

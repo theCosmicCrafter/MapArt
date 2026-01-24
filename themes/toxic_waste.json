@@ -1,0 +1,15 @@
+{
+  "name": "Toxic Waste",
+  "description": "Industrial hazard warning colors",
+  "bg": "#1A1A1A",
+  "text": "#9ACD32",
+  "gradient_color": "#1A1A1A",
+  "water": "#0F0F0F",
+  "parks": "#2A2A2A",
+  "road_motorway": "#FFFF00",
+  "road_primary": "#00FF00",
+  "road_secondary": "#FF8C00",
+  "road_tertiary": "#FF4500",
+  "road_residential": "#CC3300",
+  "road_default": "#FF8C00"
+}

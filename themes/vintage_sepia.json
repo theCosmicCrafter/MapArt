@@ -1,0 +1,15 @@
+{
+  "name": "Vintage Sepia",
+  "description": "Old-world map aesthetic with aged paper tones",
+  "bg": "#F4E8D0",
+  "text": "#5D4037",
+  "gradient_color": "#F4E8D0",
+  "water": "#E8DCC0",
+  "parks": "#E0D4B8",
+  "road_motorway": "#5D4037",
+  "road_primary": "#795548",
+  "road_secondary": "#8D6E63",
+  "road_tertiary": "#A1887F",
+  "road_residential": "#BCAAA4",
+  "road_default": "#8D6E63"
+}

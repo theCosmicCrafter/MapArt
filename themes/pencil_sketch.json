@@ -1,0 +1,24 @@
+{
+  "name": "Pencil Sketch",
+  "description": "Hand-drawn pencil sketch aesthetic with grayscale tones",
+  "bg": "#FFFFFF",
+  "text": "#2C2C2C",
+  "gradient_color": "#FFFFFF",
+  "water": "#E0E0E0",
+  "parks": "#F5F5F5",
+  "road_motorway": "#1A1A1A",
+  "road_primary": "#404040",
+  "road_secondary": "#606060",
+  "road_tertiary": "#808080",
+  "road_residential": "#A0A0A0",
+  "road_default": "#909090",
+  "texture": {
+    "enabled": true,
+    "base": "sketch_paper",
+    "blend_mode": "multiply",
+    "opacity": 0.3,
+    "edge_effect": "soft_edges",
+    "stains": [],
+    "aging": "none"
+  }
+}

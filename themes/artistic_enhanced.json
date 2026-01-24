@@ -1,0 +1,40 @@
+{
+  "name": "Artistic Enhanced",
+  "bg": "#F8F8F8",
+  "text": "#333333",
+  "gradient_color": "#F8F8F8",
+  "category": "artistic",
+  "geographic_context": "general",
+  "description": "Demonstrates color enhancement with intelligent palettes and artistic effects",
+  "colors": {
+    "background": "#F8F8F8",
+    "water": "#4682B4",
+    "parks": "#90EE90",
+    "road_motorway": "#2F4F4F",
+    "road_primary": "#404040",
+    "road_secondary": "#606060",
+    "road_tertiary": "#808080",
+    "road_residential": "#A0A0A0",
+    "road_default": "#808080"
+  },
+  "texture_overlay": "watercolor_paper.png",
+  "texture_intensity": 0.3,
+  "edge_treatment": "soft_edges",
+  "edge_softness": 1.0,
+  "adaptive_colors": true,
+  "artistic_effect": "watercolor",
+  "colorize": false,
+  "intelligent_palette": true,
+  "seasonal_variation": "summer",
+  "style": {
+    "line_width": 1.5,
+    "road_style": "curved",
+    "label_size": "medium",
+    "label_style": "normal"
+  },
+  "enhancement_options": {
+    "use_colormind_api": true,
+    "apply_geographic_rules": true,
+    "harmonize_colors": true
+  }
+}
