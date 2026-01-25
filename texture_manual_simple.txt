@@ -1,0 +1,4 @@
+DEBUG: Starting Manual Texture Blending Test
+DEBUG: Manifest Path = assets\textures\manifest.json
+DEBUG: Using Texture Path = assets\textures\base\archival_cotton_rag.jpg
+DEBUG: SUCCESS - texture_test_simple.png created

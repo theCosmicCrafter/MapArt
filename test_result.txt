@@ -1,0 +1,5 @@
+Imports OK
+Manifest exists: True
+Manifest loaded
+Texture path: assets\textures\base\rough_grey_pulp.jpg
+Test complete: test_textured.png created

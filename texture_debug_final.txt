@@ -1,0 +1,11 @@
+usage: create_map_poster.py [-h] [--city CITY] [--country COUNTRY]
+                            [--country-label COUNTRY_LABEL] [--theme THEME]
+                            [--all-themes] [--distance DISTANCE]
+                            [--width WIDTH] [--height HEIGHT] [--list-themes]
+                            [--format {png,jpg,jpeg,svg,pdf}] [--font FONT]
+                            [--texture TEXTURE]
+                            [--artistic-effect {none,watercolor,pencil_sketch,oil_painting,vintage}]
+                            [--color-enhancement {none,intelligent_palette,geographic_colors,seasonal_summer,seasonal_autumn,seasonal_winter,seasonal_spring}]
+                            [--map-shape {rectangle,circle,triangle}]
+                            [--state STATE]
+create_map_poster.py: error: unrecognized arguments: --debug

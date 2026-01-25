@@ -1,0 +1,3 @@
+--- SYSTEM AUDIT ---
+Texture: assets\textures\base\archival_cotton_rag.jpg
+VERIFIED
