@@ -1,12 +1,67 @@
 {
-  "name": "maptoposter-ui",
-  "version": "0.1.0",
-  "description": "Electron wrapper for the Neon Control Surface UI",
+  "name": "map-poster-generator",
+  "version": "1.0.0",
+  "description": "Map Poster Generator - Create beautiful map posters from any location",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "com.maptoposter.app",
+    "productName": "Map Poster Generator",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "hide-console.js",
+      "ui_hightech.html",
+      "create_map_poster.py",
+      "input_validation.py",
+      "logging_config.py",
+      "color_enhancement.py",
+      "themes/**/*",
+      "assets/**/*",
+      "requirements.txt",
+      "README.md",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": ".venv",
+        "to": "python",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": ["AppImage"],
+      "icon": "assets/icon.png"
+    }
   },
   "devDependencies": {
-    "electron": "^30.0.0"
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
   }
 }

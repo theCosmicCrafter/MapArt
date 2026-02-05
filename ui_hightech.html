@@ -3,1297 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Generate customizable, high-quality map posters for any city in the world using OpenStreetMap data. Premium designs, multiple themes, and art styles available.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: file:; connect-src 'self';">
   <title>Map Art Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&family=Oswald:wght@400;700&family=Raleway:wght@400;700&family=Lato:wght@400;700&family=Bebas+Neue&family=Anton&family=Rubik:wght@400;700&display=swap">
-  <style>
-    :root {
-      --bg: #050505;
-      --panel: #0b0b0f;
-      --grid: #12121a;
-      --text: #f6f6ff;
-      --muted: #8c8ca6;
-      --accent1: #ff6b6b;
-      --accent2: #ff8f3f;
-      --accent3: #ff4fd8;
-      --accent4: #8a2be2;
-      --glow: 0 0 12px rgba(255, 107, 107, 0.35), 0 0 24px rgba(255, 79, 216, 0.28);
-      --font-base: 'Space Grotesk', system-ui, sans-serif;
-      --font-size-base: 16px;
-    }
-
-    body[data-theme="synth"] {
-      --bg: #050510;
-      --panel: #0c0c16;
-      --grid: #171726;
-      --text: #f6f6ff;
-      --muted: #9ea0c2;
-      --accent1: #ff6b6b;
-      --accent2: #ff8f3f;
-      --accent3: #ff4fd8;
-      --accent4: #8a2be2;
-      --glow: 0 0 12px rgba(255, 79, 216, 0.35), 0 0 24px rgba(255, 143, 63, 0.32);
-      --font-base: 'Space Grotesk', system-ui, sans-serif;
-      --font-size-base: 15px;
-    }
-
-    /* Synth theme specific styles */
-    body[data-theme="synth"] .card {
-      background: linear-gradient(160deg, rgba(255,79,216,0.08), rgba(12,12,22,0.95) 45%, rgba(255,143,63,0.08));
-      border: 1px solid rgba(255,79,216,0.2);
-    }
-    
-    body[data-theme="synth"] .btn {
-      background: linear-gradient(120deg, #ff4fd8, #ff8f3f, #ff6b6b);
-      box-shadow: 0 10px 30px rgba(255,79,216,0.4);
-    }
-
-    body[data-theme="dark"] {
-      --bg: #050505;
-      --panel: #0b0b0f;
-      --grid: #12121a;
-      --text: #f5f5f7;
-      --muted: #8c8ca6;
-      --accent1: #6ec3ff;
-      --accent2: #5ad4b4;
-      --accent3: #8c6bff;
-      --accent4: #46a1ff;
-      --glow: 0 0 12px rgba(110,195,255,0.35), 0 0 18px rgba(140,107,255,0.28);
-      --font-base: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
-      --font-size-base: 16px;
-    }
-
-    /* Dark theme specific styles */
-    body[data-theme="dark"] .card {
-      background: linear-gradient(160deg, rgba(140,107,255,0.08), rgba(11,11,15,0.95) 45%, rgba(90,212,180,0.08));
-      border: 1px solid rgba(110,195,255,0.2);
-    }
-    
-    body[data-theme="dark"] .btn {
-      background: linear-gradient(120deg, #8c6bff, #5ad4b4, #6ec3ff);
-      box-shadow: 0 10px 30px rgba(140,107,255,0.4);
-    }
-
-    body[data-theme="light"] {
-      --bg: #ffffff;
-      --panel: #ffffff;
-      --grid: #f0f0f0;
-      --text: #1a1a1a;
-      --muted: #4a5568;
-      --accent1: #dc3545;
-      --accent2: #fd7e14;
-      --accent3: #0d6efd;
-      --accent4: #6610f2;
-      --glow: none;
-      --font-base: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
-      --font-size-base: 16px;
-    }
-
-    body[data-theme="light"] .chrome {
-      background: linear-gradient(145deg, #ffffff, #f8f9fa);
-      border-color: #dee2e6;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
-
-    body[data-theme="light"] .card {
-      background: #ffffff;
-      border: 1px solid #dee2e6;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-
-    body[data-theme="light"] .btn {
-      background: linear-gradient(120deg, #0d6efd, #fd7e14, #dc3545);
-      color: #ffffff;
-      box-shadow: 0 4px 16px rgba(13,110,253,0.3);
-    }
-
-    body[data-theme="light"] .neon-input,
-    body[data-theme="light"] .select {
-      background: #ffffff;
-      color: #1a1a1a;
-      border: 2px solid #cbd5e1;
-    }
-
-    body[data-theme="light"] .theme-chip,
-    body[data-theme="light"] .font-chip,
-    body[data-theme="light"] .ui-theme-chip {
-      background: #ffffff;
-      color: #1a1a1a;
-      border: 1px solid #cbd5e1;
-    }
-
-    body[data-theme="light"] .theme-chip.active,
-    body[data-theme="light"] .font-chip.active,
-    body[data-theme="light"] .ui-theme-chip.active {
-      background: #e7f1ff !important;
-      color: #0d6efd !important;
-      border-color: #0d6efd !important;
-      box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.1) !important;
-      font-weight: 700 !important;
-    }
-
-    body[data-theme="light"] .pill,
-    body[data-theme="light"] .status-pill {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #1e293b;
-    }
-
-    body[data-theme="light"] .status-pill strong {
-      color: #1a1a1a;
-    }
-
-    body[data-theme="light"] .debug-panel {
-      background: #ffffff;
-      border-color: #cbd5e1;
-      color: #1a1a1a;
-    }
-
-    body[data-theme="light"] .debug-section label {
-      color: #1e293b;
-      font-weight: 600;
-    }
-
-    body[data-theme="light"] .status {
-      color: #334155;
-      font-weight: 500;
-    }
-
-    body[data-theme="light"] .status-dot {
-      background: radial-gradient(circle, #0d6efd 0%, #6610f2 70%);
-      box-shadow: 0 0 10px rgba(13,110,253,0.4);
-    }
-
-    body[data-theme="light"] .viewer-label {
-      color: #334155;
-      font-weight: 500;
-    }
-
-    body[data-theme="light"] .theme-preview {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #1a1a1a;
-      font-weight: 500;
-    }
-
-    body[data-theme="light"] .font-preview {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #1a1a1a;
-    }
-
-    body[data-theme="light"] .font-preview-title {
-      color: #1a1a1a;
-    }
-
-    body[data-theme="light"] .font-preview-meta {
-      color: #334155;
-    }
-
-    body[data-theme="light"] header {
-      background: linear-gradient(90deg, rgba(13,110,253,0.04), rgba(253,126,20,0.03) 50%, rgba(102,16,242,0.04));
-      border-bottom-color: #dee2e6;
-    }
-
-    body[data-theme="light"] .title {
-      color: #1a1a1a;
-      text-shadow: none;
-    }
-
-    body[data-theme="light"] .title:hover {
-      color: #0d6efd;
-    }
-
-    body[data-theme="light"] .hint {
-      color: #334155;
-    }
-
-    body[data-theme="light"] .progress-card {
-      background: #ffffff;
-      border: 1px solid #dee2e6;
-    }
-
-    body[data-theme="light"] .progress-track {
-      background: #e9ecef;
-      border: 1px solid #dee2e6;
-    }
-
-    body[data-theme="light"] .progress-label {
-      color: #334155;
-    }
-
-    body[data-theme="light"] label {
-      color: #1e293b;
-    }
-
-    body[data-theme="contrast"] {
-      --bg: #000000;
-      --panel: #0d0d0d;
-      --grid: #1a1a1a;
-      --text: #ffffff;
-      --muted: #cfcfcf;
-      --accent1: #ffef00;
-      --accent2: #00eaff;
-      --accent3: #ff2f92;
-      --accent4: #ffffff;
-      --glow: 0 0 14px rgba(255,239,0,0.4), 0 0 24px rgba(0,234,255,0.35);
-      --font-base: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
-      --font-size-base: 16px;
-    }
-
-    /* Contrast theme specific styles */
-    body[data-theme="contrast"] .card {
-      background: linear-gradient(160deg, rgba(255,47,146,0.1), #0d0d0d 45%, rgba(0,234,255,0.1));
-      border: 2px solid #ffffff;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    }
-    
-    body[data-theme="contrast"] .btn {
-      background: linear-gradient(120deg, #ffef00, #00eaff, #ff2f92);
-      box-shadow: 0 8px 24px rgba(255,239,0,0.5);
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent3) 20%, transparent), transparent 40%),
-                  radial-gradient(circle at 80% 30%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 38%),
-                  radial-gradient(circle at 30% 80%, color-mix(in srgb, var(--accent4) 18%, transparent), transparent 45%),
-                  var(--bg);
-      color: var(--text);
-      font-family: var(--font-base);
-      font-size: var(--font-size-base);
-      letter-spacing: 0.02em;
-      padding: 24px;
-    }
-
-    .chrome {
-      width: 100%;
-      max-width: 1200px;
-      background: linear-gradient(145deg, color-mix(in srgb, var(--accent4) 12%, var(--panel)) 0%, var(--panel) 40%, color-mix(in srgb, var(--accent3) 10%, var(--panel)) 100%);
-      border: 1px solid color-mix(in srgb, var(--grid) 80%, var(--panel));
-      border-radius: 24px;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(255,255,255,0.03);
-      position: relative;
-      overflow: hidden;
-      margin: 0 auto;
-    }
-
-    .chrome::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
-                        linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity: 0.25;
-      mask-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
-      pointer-events: none;
-    }
-
-    header {
-      padding: 32px 36px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      border-bottom: 1px solid #1c1c28;
-      background: linear-gradient(90deg, rgba(255,79,216,0.08), rgba(255,143,63,0.05) 50%, rgba(138,43,226,0.08));
-    }
-
-    .title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: clamp(14px, 2vw, 18px);
-      line-height: 1.4;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text);
-      text-shadow: 0 0 10px rgba(255,79,216,0.6);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      -webkit-user-select: none;
-      user-select: none;
-      position: relative;
-      padding-right: 30px;
-      display: inline-block;
-    }
-
-    .title:hover {
-      color: var(--accent3);
-      transform: translateY(-1px);
-    }
-
-    .title::after {
-      content: '▼';
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 12px;
-      opacity: 0.5;
-      transition: transform 0.3s ease;
-      font-family: monospace;
-    }
-
-    .title.debug-open::after {
-      transform: translateY(-50%) rotate(180deg);
-    }
-
-    .status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #ff8f3f 0%, #ff4fd8 70%);
-      box-shadow: 0 0 10px rgba(255,143,63,0.7);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.25); opacity: 0.5; }
-    }
-
-    main {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      padding: 24px 28px 32px;
-      width: 100%;
-      max-width: 100%;
-    }
-
-    .card {
-      background: linear-gradient(160deg, color-mix(in srgb, var(--accent3) 6%, var(--panel)), color-mix(in srgb, var(--panel) 90%, var(--grid)) 45%, color-mix(in srgb, var(--accent2) 6%, var(--panel)));
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      border-radius: 18px;
-      padding: 18px;
-      position: relative;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
-      overflow: hidden;
-    }
-
-    .card::after {
-      content: "";
-      position: absolute;
-      inset: -40% 30% auto -40%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,79,216,0.65), rgba(255,143,63,0.65), transparent);
-      opacity: 0.6;
-      transform: skewX(-15deg);
-    }
-
-    .card h3 {
-      margin: 0 0 6px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      color: var(--text);
-    }
-
-    .hint {
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-      letter-spacing: 0.01em;
-      opacity: 0.9;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-
-    .field-tight { gap: 12px; }
-
-    label {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    .neon-input {
-      position: relative;
-      border-radius: 12px;
-      padding: 14px 16px;
-      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
-      color: var(--text);
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      outline: none;
-      font-size: 16px;
-      font-family: var(--font-base);
-      z-index: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Use native number spinners */
-    .neon-input[type="number"] {
-      -moz-appearance: auto;
-      appearance: auto;
-      padding-right: 12px;
-    }
-
-    .neon-input:hover { 
-      background: color-mix(in srgb, var(--panel) 88%, var(--accent4) 5%); 
-      border-color: color-mix(in srgb, var(--accent4) 30%, var(--grid));
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    .neon-input:focus { 
-      background: color-mix(in srgb, var(--panel) 82%, var(--accent3) 10%); 
-      border-color: var(--accent3);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent3) 20%, transparent);
-      transform: translateY(-1px);
-    }
-
-    .neon-input::placeholder { color: color-mix(in srgb, var(--muted) 80%, var(--text) 20%); }
-
-    .neon-input::before,
-    .neon-input::after { display: none; }
-
-    .glow-ring {
-      position: absolute;
-      inset: -2px;
-      border-radius: 14px;
-      padding: 2px;
-      background: linear-gradient(120deg, #ff6b6b, #ff8f3f, #ff4fd8, #8a2be2, #ff6b6b);
-      background-size: 300% 300%;
-      animation: borderFlow 6s ease infinite;
-      filter: drop-shadow(0 0 12px rgba(255,107,107,0.35));
-      z-index: -1;
-    }
-
-    @keyframes borderFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .input-wrap {
-      position: relative;
-      display: block;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .input-wrap input { width: 100%; background: transparent; }
-
-    .toggles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-    }
-
-    .toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 14px;
-      background: #0e0e16;
-      border: 1px solid #1f1f2a;
-      border-radius: 12px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-    }
-
-    .toggle span {
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    .error-hint {
-      color: var(--accent1);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      margin-top: -4px;
-      min-height: 16px;
-    }
-
-    .switch {
-      position: relative;
-      width: 58px;
-      height: 28px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #1c1c28, #0d0d14);
-      border: 1px solid #2b2b3d;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
-      cursor: pointer;
-      transition: background 0.25s ease, border-color 0.25s ease;
-    }
-
-    .switch input { display: none; }
-
-    .knob {
-      position: absolute;
-      top: 3px;
-      left: 4px;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #e0e0ff 60%, #d0d0ff 100%);
-      box-shadow: var(--glow);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-    }
-
-    .switch input:checked + .knob {
-      transform: translateX(28px);
-      background: radial-gradient(circle at 30% 30%, #fff1e0, #ffb878 60%, #ff6b6b 100%);
-      box-shadow: 0 0 14px rgba(255,143,63,0.6), 0 0 28px rgba(255,79,216,0.5);
-    }
-
-    .switch input:checked ~ .track-glow {
-      opacity: 1;
-    }
-
-    .track-glow {
-      position: absolute;
-      inset: -1px;
-      border-radius: 999px;
-      background: linear-gradient(120deg, rgba(255,79,216,0.35), rgba(255,143,63,0.35));
-      filter: blur(8px);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      z-index: -1;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px 24px;
-    }
-
-    .cta-row-tight {
-      padding: 12px 24px 0;
-    }
-
-    .cta-right {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn {
-      position: relative;
-      border: none;
-      border-radius: 12px;
-      padding: 14px 18px;
-      background: linear-gradient(120deg, #ff4fd8, #ff8f3f, #ff6b6b);
-      background-size: 180% 180%;
-      color: #0c0c12;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      cursor: pointer;
-      box-shadow: 0 10px 30px rgba(255,79,216,0.35);
-      text-transform: uppercase;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-      overflow: hidden;
-    }
-
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(255,79,216,0.45); }
-
-    .btn:active { transform: translateY(0); }
-
-    .btn.loading {
-      opacity: 0.65;
-      pointer-events: none;
-    }
-
-    body[data-theme="light"] .status-pill {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      color: #1e293b;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-width: 160px;
-      justify-content: center;
-    }
-
-    body[data-theme="light"] .status-pill strong {
-      color: #1a1a1a;
-      font-weight: 700;
-    }
-
-    body[data-theme="light"] .pill {
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #1e293b;
-      font-weight: 500;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      letter-spacing: 0.04em;
-    }
-
-    body[data-theme="light"] .status {
-      color: #334155;
-      font-weight: 500;
-    }
-
-    body[data-theme="light"] .status-dot {
-      background: radial-gradient(circle, #0d6efd 0%, #6610f2 70%);
-      box-shadow: 0 0 10px rgba(13,110,253,0.4);
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      border: 1px solid #26263a;
-      background: rgba(255,255,255,0.03);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      min-width: 160px;
-      justify-content: center;
-    }
-
-    .status-pill strong { color: var(--text); font-weight: 700; }
-
-    .btn::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(60deg, rgba(255,255,255,0.25), transparent 60%);
-      mix-blend-mode: screen;
-      opacity: 0;
-
-.btn:hover::after { opacity: 0.5; }
-
-.ui-theme-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-}
-
-body[data-theme="light"] .ui-theme-chip {
-  background: #ffffff;
-  color: #1a1a1a;
-  border-color: #cbd5e1;
-}
-      gap: 8px;
-      margin-top: 8px;
-
-body[data-theme="light"] .ui-theme-chip:hover,
-body[data-theme="light"] .font-chip:hover,
-body[data-theme="light"] .theme-chip:hover {
-  background: #f8f9fa;
-  border-color: #0d6efd;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-body[data-theme="light"] .ui-theme-chip.active {
-  background: #e7f1ff;
-  border-color: #0d6efd;
-  color: #0d6efd;
-  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
-}
-
-.ui-theme-chip.active {
-  border-color: var(--accent3);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent3) 45%, transparent);
-  transform: translateY(-1px);
-}
-      transform: translateY(-1px);
-    }
-
-    .meters {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .meter {
-      background: var(--panel);
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-
-    .meter label { display: flex; justify-content: space-between; }
-
-    .bar {
-      margin-top: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #1b1b28;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .bar span {
-      display: block;
-      height: 100%;
-      width: var(--value, 50%);
-      background: linear-gradient(90deg, #ff4fd8, #ff8f3f, #ff6b6b);
-      background-size: 200% 200%;
-      animation: borderFlow 5s ease infinite;
-      box-shadow: 0 0 8px rgba(255,79,216,0.45);
-    }
-
-    .viewer {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .output-img {
-      display: none;
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      border-radius: 12px;
-    }
-
-    .viewer-frame {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      border-radius: 14px;
-      overflow: hidden;
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      background: var(--panel);
-      padding: 12px;
-    }
-
-    .folder-btn {
-      position: absolute;
-      bottom: 10px;
-      right: 12px;
-      width: 32px;
-      height: 32px;
-      padding: 6px;
-      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      border-radius: 8px;
-      color: var(--text);
-      cursor: pointer;
-      -webkit-backdrop-filter: blur(6px);
-      backdrop-filter: blur(6px);
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    .folder-btn:hover {
-      background: rgba(255,79,216,0.2);
-      color: var(--text);
-      border-color: #ff4fd8;
-      transform: scale(1.05);
-    }
-
-    .folder-btn svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .toast-container {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 9999;
-    }
-
-    .toast {
-      min-width: 240px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 1px solid #26263a;
-      background: #0d0d15;
-      color: var(--text);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      font-size: 13px;
-      letter-spacing: 0.03em;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      animation: fadeIn 0.2s ease;
-    }
-
-    .toast.success { border-color: #2fbf71; color: #d9ffe9; }
-    .toast.error { border-color: #ff6b6b; color: #ffe3e3; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .swap-btn {
-      align-self: center;
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      background: var(--panel);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .swap-btn:hover { background: color-mix(in srgb, var(--panel) 85%, var(--accent1) 5%); transform: translateY(-1px); }
-
-    .viewer-grid {
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px),
-                        linear-gradient(0deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-      background-size: 36px 36px;
-      opacity: 0.22;
-      pointer-events: none;
-    }
-
-    .viewer-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(130deg, rgba(255,79,216,0.18) 0%, rgba(255,143,63,0.14) 40%, rgba(10,10,16,0.5) 70%);
-      mix-blend-mode: screen;
-      opacity: 0.65;
-      pointer-events: none;
-    }
-
-    .viewer-label {
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.02em;
-    }
-
-    .progress-card {
-      background: linear-gradient(160deg, rgba(255,79,216,0.06), rgba(5,5,5,0.9) 45%, rgba(255,143,63,0.06));
-      border: 1px solid #1f1f2a;
-      border-radius: 18px;
-      padding: 14px 18px;
-      position: relative;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.35);
-      overflow: hidden;
-      margin: 0 0 12px 0;
-      width: 100%;
-    }
-
-    .progress-track {
-      position: relative;
-      width: 100%;
-      height: 14px;
-      border-radius: 999px;
-      background: #0f0f17;
-      border: 1px solid #26263a;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      position: absolute;
-      inset: 0;
-      width: 0%;
-      background: linear-gradient(120deg, #ff4fd8, #ff8f3f, #ff6b6b);
-      background-size: 220% 220%;
-      animation: borderFlow 4s ease infinite, shimmer 2s ease-in-out infinite;
-      box-shadow: 0 0 12px rgba(255,79,216,0.45);
-      transition: width 0.3s ease-out;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { opacity: 0.9; }
-      50% { opacity: 1; }
-    }
-
-    .progress-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 13px;
-      letter-spacing: 0.04em;
-    }
-
-    .select {
-      appearance: none;
-      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
-      color: var(--text);
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-family: var(--font-base);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .select:hover {
-      background: color-mix(in srgb, var(--panel) 88%, var(--accent4) 5%);
-      border-color: var(--accent4);
-    }
-
-    .select:focus {
-      outline: none;
-      border-color: var(--accent3);
-      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent3) 20%, transparent);
-    }
-
-    /* Light theme select fixes */
-    body[data-theme="light"] .select {
-      background: #ffffff;
-      color: #1a1a1a;
-      border: 2px solid #cbd5e1;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    body[data-theme="light"] .select::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(13,110,253,0.1), transparent);
-      transition: left 0.6s ease;
-      z-index: 1;
-    }
-    
-    body[data-theme="light"] .select:hover::before {
-      left: 100%;
-    }
-
-    body[data-theme="light"] .select:hover {
-      background: #ffffff;
-      border-color: #0d6efd;
-      box-shadow: 0 2px 8px rgba(13,110,253,0.15);
-    }
-    
-    body[data-theme="light"] .select:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
-    }
-    .neon-input {
-      background: color-mix(in srgb, var(--panel) 92%, var(--grid));
-      color: var(--text);
-      border: 1px solid color-mix(in srgb, var(--grid) 75%, var(--panel));
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-family: var(--font-base);
-      position: relative;
-      z-index: 2;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    
-    .inline-pair {
-      display: flex;
-      gap: 8px;
-    }
-
-    .flex-1 { flex: 1; }
-
-    .debug-panel {
-      display: none;
-      position: fixed;
-      top: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 800px;
-      border: 1px solid #1f1f2a;
-      border-radius: 14px;
-      background: #0a0a12;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.03);
-      padding: 16px;
-      max-height: 300px;
-      overflow: auto;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-      z-index: 1000;
-      animation: slideDown 0.3s ease-out;
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-      }
-    }
-
-    .debug-section {
-      margin-bottom: 16px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #1f1f2a;
-    }
-
-    .debug-section label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-
-    body[data-theme="light"] .debug-section {
-      border-bottom-color: #cbd5e1;
-    }
-
-    .debug-entry.err { color: #ff6b6b; }
-
-    .theme-preview {
-      margin-top: 8px;
-      padding: 8px;
-      border: 1px solid #1f1f2a;
-      border-radius: 10px;
-      background: #0b0b11;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .theme-preview img {
-      width: 80px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid #26263a;
-    }
-
-    .theme-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .map-type-toggle {
-      display: flex;
-      gap: 4px;
-      margin-top: 8px;
-      background: #0d0d15;
-      padding: 4px;
-      border-radius: 12px;
-      border: 1px solid #26263a;
-    }
-
-    .map-type-btn {
-      padding: 8px 16px;
-      border: none;
-      background: transparent;
-      color: var(--text);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .map-type-btn:hover {
-      background: #26263a;
-    }
-
-    .map-type-btn.active {
-      background: var(--accent3);
-      color: #ffffff;
-      box-shadow: 0 2px 8px rgba(255,79,216,0.3);
-    }
-
-    .theme-chip {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid #26263a;
-      background: #0d0d15;
-      color: var(--text);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .theme-chip::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
-    }
-
-    .theme-chip:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255,79,216,0.3);
-      border-color: var(--accent3);
-    }
-
-    .theme-chip:hover::before {
-      transform: translateX(100%);
-    }
-
-    .theme-chip.active {
-      background: var(--accent3);
-      color: #ffffff;
-      border-color: var(--accent3);
-      box-shadow: 0 4px 16px rgba(255,79,216,0.4);
-    }
-
-    .font-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
-
-    .font-chip {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: 1px solid #26263a;
-      background: #0d0d15;
-      color: var(--text);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
-    }
-
-    .font-chip::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.1), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
-    }
-
-    .font-chip:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255,79,216,0.3);
-      border-color: var(--accent3);
-    }
-
-    .font-chip:hover::before {
-      transform: translateX(100%);
-    }
-
-    .font-chip.active {
-      background: var(--accent3);
-      color: #ffffff;
-      border-color: var(--accent3);
-      box-shadow: 0 4px 16px rgba(255,79,216,0.4);
-    }
-
-    .font-preview {
-      margin-top: 8px;
-      padding: 8px;
-      border: 1px solid #1f1f2a;
-      border-radius: 10px;
-      background: #0b0b11;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-    }
-
-    .font-preview-title {
-      font-size: 20px;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .font-preview-meta {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .panel-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 12px;
-    }
-
-    .stack {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    @media (max-width: 640px) {
-      header { flex-direction: column; align-items: flex-start; }
-      .cta-row { justify-content: flex-start; }
-      .panel-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (min-width: 1400px) {
-      main {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 1800px;
-        margin: 0 auto;
-      }
-      
-      .chrome {
-        max-width: 1800px;
-      }
-    }
-
-    @media (min-width: 1200px) and (max-width: 1399px) {
-      main {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 1400px;
-        margin: 0 auto;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body>
+<body data-theme="synth">
   <div class="chrome">
     <header>
       <div class="title" id="debug-toggle" title="Click to toggle debug log">Map Art Generator</div>
-      <div class="status"><span class="status-dot"></span>Systems Nominal · Output saves to /outputs</div>
+      <div class="header-status-group">
+          <div class="queue-badge" id="queue-counter">AQ: 0</div>
+          <div class="status" id="status-msg"><span class="status-dot"></span>Systems Nominal · Output saves to /outputs</div>
+      </div>
     </header>
 
     <div class="progress-card">
@@ -1306,8 +33,8 @@ body[data-theme="light"] .ui-theme-chip.active {
     </div>
 
     <main class="panel-grid">
-      <div class="stack">
-        <div class="card card-tight">
+      <section class="stack">
+        <article class="card card-tight">
           <h3>Input Vector</h3>
           <p class="hint">Enter the city + country for your map art (e.g., “Barcelona, Spain”). Press Enter or hit Execute to render.</p>
           <div class="field">
@@ -1325,14 +52,14 @@ body[data-theme="light"] .ui-theme-chip.active {
               <button class="btn" id="execute-btn" disabled>Execute Pulse</button>
             </div>
           </div>
-        </div>
+        </article>
 
-        <div class="card">
+        <article class="card">
           <h3>Output Viewer</h3>
           <p class="hint">Newest map poster is saved to /outputs. Refresh after Execute to view the latest render.</p>
           <div class="viewer">
             <div class="viewer-frame">
-              <img id="output-img" class="output-img" />
+              <img id="output-img" class="output-img" alt="Generated map poster preview" />
               <div class="viewer-grid"></div>
               <div class="viewer-overlay"></div>
               <button class="folder-btn" id="open-folder-btn" title="Open Output Folder">
@@ -1343,22 +70,31 @@ body[data-theme="light"] .ui-theme-chip.active {
             </div>
             <div class="viewer-label">Tip: Generated poster appears here after Execute. Filenames include city + theme + timestamp.</div>
           </div>
-        </div>
-      </div>
+        </article>
+      </section>
 
-      <div class="stack">
-        <div class="card">
+      <section class="stack">
+        <article class="card">
           <h3>Generation Controls</h3>
           <p class="hint">Set generation parameters. Theme maps to CLI --theme; distance sets radius in meters; width/height are inches; format is output type.</p>
           <div class="field field-tight">
-            <!-- Map Type removed: all themes available in one list -->
+            <div class="field">
+              <label>Map Type</label>
+              <div class="map-type-toggle" id="map-type-toggle">
+                <button class="map-type-btn active" data-type="city">City</button>
+                <button class="map-type-btn" data-type="railway">Railway</button>
+                <button class="map-type-btn" data-type="cycling">Cycling</button>
+                <button class="map-type-btn" data-type="transit">Transit</button>
+                <button class="map-type-btn" data-type="maritime">Maritime</button>
+              </div>
+            </div>
             <div class="field">
               <label>Theme</label>
               <div class="theme-chip-row" id="theme-chips"></div>
               <div class="theme-preview" id="theme-preview">Hover or select a theme to see its style notes.</div>
             </div>
             <div class="field">
-              <label>Paper Texture</label>
+              <label for="texture-select">Paper Texture</label>
               <select id="texture-select" class="neon-input select" title="Select paper texture for the map">
                 <option value="none">None</option>
                 <optgroup label="Base Papers">
@@ -1421,9 +157,46 @@ body[data-theme="light"] .ui-theme-chip.active {
                 </optgroup>
               </select>
             </div>
-            <!-- Map Style removed: only real OpenStreetMap data supported -->
+            
+            <!-- STYLE MIXER -->
+            <div class="field mixer-section">
+              <div class="mixer-header">
+                <label for="enable-mixer" class="mixer-label">Style Mixer</label>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="enable-mixer" />
+                  <label for="enable-mixer" class="toggle-track"></label>
+                </div>
+              </div>
+              
+              <div id="mixer-controls" class="mixer-controls-panel">
+                <div class="field compact">
+                   <label>Roads Style</label>
+                   <select id="style-roads" class="neon-input select compact" title="Select custom style for roads">
+                     <option value="">(From Theme)</option>
+                   </select>
+                </div>
+                <div class="field compact">
+                   <label>Water Style</label>
+                   <select id="style-water" class="neon-input select compact" title="Select custom style for water">
+                     <option value="">(From Theme)</option>
+                   </select>
+                </div>
+                <div class="field compact">
+                   <label>Parks Style</label>
+                   <select id="style-parks" class="neon-input select compact" title="Select custom style for parks">
+                     <option value="">(From Theme)</option>
+                   </select>
+                </div>
+                <div class="field compact">
+                   <label>Transit Style</label>
+                   <select id="style-transit" class="neon-input select compact" title="Select custom style for transit">
+                     <option value="">(From Theme)</option>
+                   </select>
+                </div>
+              </div>
+            </div>
             <div class="field">
-              <label>Map Shape</label>
+              <label for="map-shape">Map Shape</label>
               <select id="map-shape" class="neon-input select" title="Choose map shape">
                 <option value="rectangle">Rectangle</option>
                 <option value="circle">Circle</option>
@@ -1431,7 +204,7 @@ body[data-theme="light"] .ui-theme-chip.active {
               </select>
             </div>
             <div class="field">
-              <label>Artistic Effect</label>
+              <label for="artistic-effect">Artistic Effect</label>
               <select id="artistic-effect" class="neon-input select" title="Apply artistic effects to the map">
                 <option value="none">None</option>
                 <option value="watercolor">Watercolor</option>
@@ -1441,7 +214,7 @@ body[data-theme="light"] .ui-theme-chip.active {
               </select>
             </div>
             <div class="field">
-              <label>Color Enhancement</label>
+              <label for="color-enhancement">Color Enhancement</label>
               <select id="color-enhancement" class="neon-input select" title="Apply intelligent color enhancement">
                 <option value="none">None</option>
                 <option value="intelligent_palette">Intelligent Palette</option>
@@ -1468,14 +241,16 @@ body[data-theme="light"] .ui-theme-chip.active {
               </div>
             </div>
             <div class="field">
-              <label for="distance">Distance (m)</label>
+              <label for="distance">Distance / Scale</label>
+              <div class="distance-presets" id="distance-presets"></div>
               <div class="input-wrap">
                 <div class="glow-ring"></div>
                 <input id="distance" class="neon-input" type="number" value="29000" min="1000" step="500" />
               </div>
+              <div class="scale-hint" id="scale-hint">City view: ~29km radius</div>
             </div>
             <div class="field">
-              <label for="size">Size (W x H inches)</label>
+              <label for="width">Size (W x H inches)</label>
               <div class="inline-pair">
                 <div class="input-wrap flex-1">
                   <div class="glow-ring"></div>
@@ -1494,8 +269,8 @@ body[data-theme="light"] .ui-theme-chip.active {
               <div class="font-preview" id="font-preview">Hover or select a font to see how it looks.</div>
             </div>
           </div>
-        </div>
-      </div>
+        </article>
+      </section>
     </main>
   </div>
   
@@ -1518,11 +293,12 @@ body[data-theme="light"] .ui-theme-chip.active {
     const fontPreview = document.getElementById('font-preview');
     const uiThemeChips = document.getElementById('ui-theme-chips');
     const textureSelect = document.getElementById('texture-select');
-    // mapStyleSelect removed
+    const mapTypeToggle = document.getElementById('map-type-toggle');
+    const distancePresets = document.getElementById('distance-presets');
+    const scaleHint = document.getElementById('scale-hint');
     const mapShapeSelect = document.getElementById('map-shape');
     const artisticEffectSelect = document.getElementById('artistic-effect');
     const colorEnhancementSelect = document.getElementById('color-enhancement');
-    // mapTypeToggle removed
     const distanceInput = document.getElementById('distance');
     const widthInput = document.getElementById('width');
     const heightInput = document.getElementById('height');
@@ -1534,16 +310,103 @@ body[data-theme="light"] .ui-theme-chip.active {
     const pillFont = document.getElementById('pill-font');
     const toastContainer = document.getElementById('toast-container');
     const swapSizeBtn = document.getElementById('swap-size');
+    const statusMsg = document.getElementById('status-msg');
+
 
     let selectedTheme = 'feature_based';
     let selectedFont = 'Roboto';
     let selectedTexture = 'none';
-    // selectedMapStyle removed - only real maps
     let selectedMapShape = 'rectangle';
     let selectedArtisticEffect = 'none';
     let selectedColorEnhancement = 'none';
-    let selectedMapType = 'modern';
+    let selectedMapType = ['city'];
     const progressFill = document.getElementById('progress-fill');
+
+    // Map type distance presets configuration
+    const mapTypeDistanceConfig = {
+      city: {
+        default: 29000,
+        presets: [
+          { value: 5000, label: '5km', desc: 'Neighborhood' },
+          { value: 15000, label: '15km', desc: 'District' },
+          { value: 29000, label: '29km', desc: 'City' },
+          { value: 50000, label: '50km', desc: 'Metro' },
+        ],
+        hint: 'City view radius'
+      },
+      railway: {
+        default: 100000,
+        presets: [
+          { value: 50000, label: '50km', desc: 'Short haul' },
+          { value: 100000, label: '100km', desc: 'Regional' },
+          { value: 250000, label: '250km', desc: 'Intercity' },
+          { value: 500000, label: '500km', desc: 'Long distance' },
+        ],
+        hint: 'Railway route span'
+      },
+      cycling: {
+        default: 10000,
+        presets: [
+          { value: 5000, label: '5km', desc: 'Quick ride' },
+          { value: 10000, label: '10km', desc: 'Casual' },
+          { value: 25000, label: '25km', desc: 'Tour' },
+          { value: 50000, label: '50km', desc: 'Endurance' },
+        ],
+        hint: 'Cycling route distance'
+      },
+      transit: {
+        default: 15000,
+        presets: [
+          { value: 5000, label: '5km', desc: 'Local' },
+          { value: 10000, label: '10km', desc: 'Urban' },
+          { value: 15000, label: '15km', desc: 'Citywide' },
+          { value: 30000, label: '30km', desc: 'Regional' },
+        ],
+        hint: 'Transit system span'
+      },
+      maritime: {
+        default: 200000,
+        presets: [
+          { value: 50000, label: '50km', desc: 'Coastal' },
+          { value: 100000, label: '100km', desc: 'Harbor' },
+          { value: 200000, label: '200km', desc: 'Regional' },
+          { value: 500000, label: '500km', desc: 'Voyage' },
+        ],
+        hint: 'Maritime route span'
+      }
+    };
+
+    const renderDistancePresets = (mapType) => {
+      if (!distancePresets) return;
+      const config = mapTypeDistanceConfig[mapType] || mapTypeDistanceConfig.city;
+      
+      distancePresets.innerHTML = '';
+      config.presets.forEach(preset => {
+        const btn = document.createElement('button');
+        btn.className = 'distance-preset-btn';
+        btn.textContent = preset.label;
+        btn.title = `${preset.desc} - ${preset.value.toLocaleString()}m`;
+        btn.addEventListener('click', () => {
+          distanceInput.value = preset.value;
+          if (scaleHint) scaleHint.textContent = `${config.hint}: ~${preset.label} ${preset.desc}`;
+          saveInputs();
+        });
+        distancePresets.appendChild(btn);
+      });
+      
+      // Update hint
+      if (scaleHint) {
+        const defaultPreset = config.presets.find(p => p.value === config.default) || config.presets[0];
+        scaleHint.textContent = `${config.hint}: ~${defaultPreset.label} ${defaultPreset.desc}`;
+      }
+    };
+
+    const applyMapTypeDefaults = (mapType) => {
+      const config = mapTypeDistanceConfig[mapType] || mapTypeDistanceConfig.city;
+      distanceInput.value = config.default;
+      renderDistancePresets(mapType);
+    };
+
     const progressText = document.getElementById('progress-text');
     const progressValue = document.getElementById('progress-value');
     const debugPanel = document.getElementById('debug-panel');
@@ -1573,8 +436,24 @@ body[data-theme="light"] .ui-theme-chip.active {
 
     const parseCityCountry = (input) => {
       if (!input) return { city: '', country: '' };
+      
+      const countries = ['USA', 'CANADA', 'UK', 'UNITED KINGDOM', 'FRANCE', 'GERMANY', 'ITALY', 'SPAIN', 'AUSTRALIA', 'MEXICO', 'JAPAN', 'CHINA', 'BRAZIL'];
       const parts = input.split(',').map(p => p.trim()).filter(Boolean);
+      
       if (parts.length === 1) {
+        const spaceParts = input.trim().split(/\s+/);
+        if (spaceParts.length > 1) {
+          const last = spaceParts[spaceParts.length - 1].toUpperCase();
+          if (countries.includes(last) || (last === 'STATES' && spaceParts[spaceParts.length-2]?.toUpperCase() === 'UNITED')) {
+            const country = (last === 'STATES') ? 'USA' : spaceParts[spaceParts.length - 1];
+            const cityPart = (last === 'STATES') ? spaceParts.slice(0, -2) : spaceParts.slice(0, -1);
+            return {
+              city: cityPart.join(' '),
+              country: country === 'US' || country === 'USA' ? 'USA' : country
+            };
+          }
+        }
+        
         // If only city is provided, assume USA for common US cities
         const city = parts[0];
         const commonUSCities = ['Raleigh', 'New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Jacksonville', 'Fort Worth', 'Columbus', 'Charlotte', 'San Francisco', 'Indianapolis', 'Seattle', 'Denver', 'Washington', 'Boston', 'El Paso', 'Nashville', 'Detroit', 'Oklahoma City', 'Portland', 'Las Vegas', 'Memphis', 'Louisville', 'Milwaukee', 'Baltimore', 'Albuquerque', 'Tucson', 'Fresno', 'Sacramento', 'Kansas City', 'Mesa', 'Atlanta', 'Omaha', 'Colorado Springs', 'Raleigh', 'Long Beach', 'Virginia Beach', 'Miami', 'Oakland', 'Minneapolis', 'Tampa', 'Tulsa', 'Arlington', 'Wichita', 'New Orleans', 'Bakersfield', 'Tampa', 'Honolulu', 'Anaheim', 'Santa Ana', 'Riverside', 'Corpus Christi', 'Lexington', 'Henderson', 'Stockton', 'St. Paul', 'Cincinnati', 'Greensboro', 'Pittsburgh', 'Lincoln', 'Anchorage', 'Plano', 'Orlando', 'Irvine', 'Newark', 'Durham', 'Chula Vista', 'Fort Wayne', 'Chandler', 'Laredo', 'Norfolk', 'Madison', 'Lubbock', 'Scottsdale', 'Garland', 'Gilbert', 'Reno', 'Glendale', 'Buffalo', 'North Las Vegas', 'Hialeah', 'Winston Salem', 'Chesapeake', 'Fremont', 'Irving', 'El Paso', 'Greensboro'];
@@ -1583,15 +462,15 @@ body[data-theme="light"] .ui-theme-chip.active {
           country: commonUSCities.includes(city) ? 'USA' : ''
         };
       }
+
       
-      // Handle US states: if last part is a US state abbreviation, treat the next part as the country
+      // Handle US states
       const usStates = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC'];
       
       if (parts.length >= 3) {
         const secondToLast = parts[parts.length - 2].toUpperCase();
         const last = parts[parts.length - 1].toUpperCase();
         
-        // Check if we have "City, State, Country" format
         if (usStates.includes(secondToLast) && (last === 'USA' || last === 'US' || last === 'UNITED STATES')) {
           return { 
             city: parts[0], 
@@ -1601,7 +480,6 @@ body[data-theme="light"] .ui-theme-chip.active {
         }
       }
       
-      // Default: join everything after the city as country
       return { city: parts[0], country: parts.slice(1).join(', ') };
     };
 
@@ -1609,7 +487,6 @@ body[data-theme="light"] .ui-theme-chip.active {
       if (typeof pct === 'number') {
         setProgress(Math.max(0, Math.min(100, Math.round(pct))), text || '');
       }
-      // When done, load the newest PNG
       if (pct >= 100 && outputImg) {
         setTimeout(async () => {
           const newestPath = await window.electronAPI.getNewestPoster();
@@ -1647,50 +524,47 @@ body[data-theme="light"] .ui-theme-chip.active {
     });
 
     const themesMeta = {
-      feature_based: { desc: 'Classic black/white with road hierarchy.', img: 'posters/new_york_feature_based_20260124_034913.jpg' },
-      gradient_roads: { desc: 'Smooth gradients across primary roads.', img: 'posters/new_york_gradient_roads_20260124_034936.jpg' },
-      contrast_zones: { desc: 'High-contrast density shading.', img: 'posters/new_york_contrast_zones_20260124_034856.jpg' },
-      noir: { desc: 'True black backdrop, white roads.', img: 'posters/new_york_noir_20260124_035137.jpg' },
-      midnight_blue: { desc: 'Navy base with warm gold strokes.', img: 'posters/new_york_midnight_blue_20260124_035005.jpg' },
-      blueprint: { desc: 'Blueprint lines on cool blue.', img: 'posters/new_york_blueprint_20260124_034844.jpg' },
-      neon_cyberpunk: { desc: 'Electric pink/cyan on dark.', img: 'posters/new_york_neon_cyberpunk_20260124_035021.jpg' },
-      warm_beige: { desc: 'Vintage beige paper feel.', img: 'posters/new_york_warm_beige_20260124_035125.jpg' },
-      pastel_dream: { desc: 'Soft pastel palette.', img: 'posters/new_york_pastel_dream_20260124_034941.jpg' },
-      japanese_ink: { desc: 'Minimal ink wash aesthetic.', img: 'posters/new_york_japanese_ink_20260124_034950.jpg' },
-      forest: { desc: 'Deep greens and sage.', img: 'posters/new_york_forest_20260124_034924.jpg' },
-      ocean: { desc: 'Cool blues and teals.', img: 'posters/new_york_ocean_20260124_035032.jpg' },
-      terracotta: { desc: 'Mediterranean terracotta warmth.', img: 'posters/new_york_terracotta_20260124_035110.jpg' },
-      sunset: { desc: 'Oranges and pinks inspired by dusk.', img: 'posters/new_york_sunset_20260124_035101.jpg' },
-      autumn: { desc: 'Burnt oranges and reds.', img: 'posters/new_york_autumn_20260124_034839.jpg' },
-      copper_patina: { desc: 'Oxidized copper tones.', img: 'posters/new_york_copper_patina_20260124_034901.jpg' },
-      monochrome_blue: { desc: 'Single-family blue monochrome.', img: 'posters/new_york_monochrome_blue_20260124_035015.jpg' },
-      // New themes
-      arctic_aurora: { desc: 'Northern lights with deep blue and aurora colors.', img: 'posters/new_york_arctic_aurora_20260124_034828.jpg' },
-      mars_colony: { desc: 'Red planet aesthetic with rusty oranges.', img: 'posters/new_york_mars_colony_20260124_034956.jpg' },
-      enchanted_forest: { desc: 'Deep greens with bioluminescent accents.', img: 'posters/new_york_enchanted_forest_20260124_035907.jpg' },
-      vintage_sepia: { desc: 'Old-world map with aged paper tones.', img: 'posters/new_york_vintage_sepia_20260124_035120.jpg' },
-      candy_land: { desc: 'Playful pastel colors like candy.', img: 'posters/new_york_candy_land_20260124_034849.jpg' },
-      matrix_code: { desc: 'Digital rain effect with greens on black.', img: 'posters/new_york_matrix_code_20260124_035001.jpg' },
-      sunset_boulevard: { desc: 'LA sunset vibes with warm gradients.', img: 'posters/new_york_sunset_boulevard_20260124_035106.jpg' },
-      ice_crystal: { desc: 'Frozen crystalline appearance.', img: 'posters/new_york_ice_crystal_20260124_034940.jpg' },
-      toxic_waste: { desc: 'Industrial hazard warning colors.', img: 'posters/new_york_toxic_waste_20260124_035115.jpg' },
-      royal_purple: { desc: 'Regal luxury with deep purples and golds.', img: 'posters/new_york_royal_purple_20260124_035056.jpg' },
-      watercolor: { desc: 'Soft, flowing watercolor aesthetic with artistic colors.', img: 'posters/new_york_watercolor_20260124_035130.jpg' },
-      pencil_sketch: { desc: 'Hand-drawn pencil sketch with grayscale tones.', img: 'posters/new_york_pencil_sketch_20260124_034946.jpg' },
-      ink_wash: { desc: 'East Asian ink wash art with black ink gradients.', img: 'posters/new_york_ink_wash_20260124_034945.jpg' },
-      oil_paint: { desc: 'Rich oil painting with vibrant colors and brush strokes.', img: 'posters/new_york_oil_paint_20260124_035037.jpg' },
-      // Geographic themes
-      mountain_watercolor: { desc: 'Soft watercolors perfect for mountain regions with elevation-based coloring.', img: 'posters/new_york_mountain_watercolor_20260124_035719.jpg' },
-      coastal_nautical: { desc: 'Nautical chart style with blues and sea-themed colors.', img: 'posters/new_york_coastal_nautical_20260124_035700.jpg' },
-      desert_oasis: { desc: 'Warm desert colors with oasis highlights.', img: 'posters/new_york_desert_oasis_20260124_035646.jpg' },
-      forest_enchanted: { desc: 'Lush forest theme with mystical green tones.', img: 'posters/new_york_forest_enchanted_20260124_035714.jpg' },
-      fantasy_ancient: { desc: 'Aged fantasy map with mystical elements.', img: 'posters/new_york_fantasy_ancient_20260124_035710.jpg' },
-      // Historical themes
-      roman_britain: { desc: 'Imperial Roman roads with terracotta and gold.', img: 'posters/new_york_roman_britain_20260124_035051.jpg' },
-      feudal_japan: { desc: 'Traditional ink wash aesthetic.', img: 'posters/new_york_feudal_japan_20260124_034918.jpg' },
-      ming_dynasty: { desc: 'Imperial China with forbidden city colors.', img: 'posters/new_york_ming_dynasty_20260124_035010.jpg' },
-      american_revolution: { desc: 'Colonial America with patriotic colors.', img: 'posters/new_york_american_revolution_20260124_034822.jpg' },
-      gold_rush: { desc: 'Wild West with gold and frontier colors.', img: 'posters/new_york_gold_rush_20260124_034930.jpg' },
+      feature_based: { desc: 'Classic black/white with road hierarchy.', img: 'assets/posters/new_york_feature_based_preview.jpg' },
+      gradient_roads: { desc: 'Smooth gradients across primary roads.', img: 'assets/posters/new_york_gradient_roads_preview.jpg' },
+      contrast_zones: { desc: 'High-contrast density shading.', img: 'assets/posters/new_york_contrast_zones_preview.jpg' },
+      noir: { desc: 'True black backdrop, white roads.', img: 'assets/posters/new_york_noir_preview.jpg' },
+      midnight_blue: { desc: 'Navy base with warm gold strokes.', img: 'assets/posters/new_york_midnight_blue_preview.jpg' },
+      blueprint: { desc: 'Blueprint lines on cool blue.', img: 'assets/posters/new_york_blueprint_preview.jpg' },
+      neon_cyberpunk: { desc: 'Electric pink/cyan on dark.', img: 'assets/posters/new_york_neon_cyberpunk_preview.jpg' },
+      warm_beige: { desc: 'Vintage beige paper feel.', img: 'assets/posters/new_york_warm_beige_preview.jpg' },
+      pastel_dream: { desc: 'Soft pastel palette.', img: 'assets/posters/new_york_pastel_dream_preview.jpg' },
+      japanese_ink: { desc: 'Minimal ink wash aesthetic.', img: 'assets/posters/new_york_japanese_ink_preview.jpg' },
+      forest: { desc: 'Deep greens and sage.', img: 'assets/posters/new_york_forest_preview.jpg' },
+      ocean: { desc: 'Cool blues and teals.', img: 'assets/posters/new_york_ocean_preview.jpg' },
+      terracotta: { desc: 'Mediterranean terracotta warmth.', img: 'assets/posters/new_york_terracotta_preview.jpg' },
+      sunset: { desc: 'Oranges and pinks inspired by dusk.', img: 'assets/posters/new_york_sunset_preview.jpg' },
+      autumn: { desc: 'Burnt oranges and reds.', img: 'assets/posters/new_york_autumn_preview.jpg' },
+      copper_patina: { desc: 'Oxidized copper tones.', img: 'assets/posters/new_york_copper_patina_preview.jpg' },
+      monochrome_blue: { desc: 'Single-family blue monochrome.', img: 'assets/posters/new_york_monochrome_blue_preview.jpg' },
+      arctic_aurora: { desc: 'Northern lights with deep blue and aurora colors.', img: 'assets/posters/new_york_arctic_aurora_preview.jpg' },
+      mars_colony: { desc: 'Red planet aesthetic with rusty oranges.', img: 'assets/posters/new_york_mars_colony_preview.jpg' },
+      enchanted_forest: { desc: 'Deep greens with bioluminescent accents.', img: 'assets/posters/new_york_enchanted_forest_preview.jpg' },
+      vintage_sepia: { desc: 'Old-world map with aged paper tones.', img: 'assets/posters/new_york_vintage_sepia_preview.jpg' },
+      candy_land: { desc: 'Playful pastel colors like candy.', img: 'assets/posters/new_york_candy_land_preview.jpg' },
+      matrix_code: { desc: 'Digital rain effect with greens on black.', img: 'assets/posters/new_york_matrix_code_preview.jpg' },
+      sunset_boulevard: { desc: 'LA sunset vibes with warm gradients.', img: 'assets/posters/new_york_sunset_boulevard_preview.jpg' },
+      ice_crystal: { desc: 'Frozen crystalline appearance.', img: 'assets/posters/new_york_ice_crystal_preview.jpg' },
+      toxic_waste: { desc: 'Industrial hazard warning colors.', img: 'assets/posters/new_york_toxic_waste_preview.jpg' },
+      royal_purple: { desc: 'Regal luxury with deep purples and golds.', img: 'assets/posters/new_york_royal_purple_preview.jpg' },
+      watercolor: { desc: 'Soft, flowing watercolor aesthetic with artistic colors.', img: 'assets/posters/new_york_watercolor_preview.jpg' },
+      pencil_sketch: { desc: 'Hand-drawn pencil sketch with grayscale tones.', img: 'assets/posters/new_york_pencil_sketch_preview.jpg' },
+      ink_wash: { desc: 'East Asian ink wash art with black ink gradients.', img: 'assets/posters/new_york_ink_wash_preview.jpg' },
+      oil_paint: { desc: 'Rich oil painting with vibrant colors and brush strokes.', img: 'assets/posters/new_york_oil_paint_preview.jpg' },
+      mountain_watercolor: { desc: 'Soft watercolors perfect for mountain regions with elevation-based coloring.', img: 'assets/posters/new_york_mountain_watercolor_preview.jpg' },
+      coastal_nautical: { desc: 'Nautical chart style with blues and sea-themed colors.', img: 'assets/posters/new_york_coastal_nautical_preview.jpg' },
+      desert_oasis: { desc: 'Warm desert colors with oasis highlights.', img: 'assets/posters/new_york_desert_oasis_preview.jpg' },
+      forest_enchanted: { desc: 'Lush forest theme with mystical green tones.', img: 'assets/posters/new_york_forest_enchanted_preview.jpg' },
+      fantasy_ancient: { desc: 'Aged fantasy map with mystical elements.', img: 'assets/posters/new_york_fantasy_ancient_preview.jpg' },
+      roman_britain: { desc: 'Imperial Roman roads with terracotta and gold.', img: 'assets/posters/new_york_roman_britain_preview.jpg' },
+      feudal_japan: { desc: 'Traditional ink wash aesthetic.', img: 'assets/posters/new_york_feudal_japan_preview.jpg' },
+      ming_dynasty: { desc: 'Imperial China with forbidden city colors.', img: 'assets/posters/new_york_ming_dynasty_preview.jpg' },
+      american_revolution: { desc: 'Colonial America with patriotic colors.', img: 'assets/posters/new_york_american_revolution_preview.jpg' },
+      gold_rush: { desc: 'Wild West with gold and frontier colors.', img: 'assets/posters/new_york_gold_rush_preview.jpg' },
     };
 
     const fontsList = [
@@ -1701,19 +575,24 @@ body[data-theme="light"] .ui-theme-chip.active {
     const renderThemePreview = (key) => {
       if (themePreview && themesMeta[key]) {
         const meta = themesMeta[key];
-        const img = new Image();
-        img.onload = () => {
-          themePreview.innerHTML = `<img src="${meta.img}" alt="${key}" /><div>${key}: ${meta.desc}</div>`;
+        const testImg = new Image();
+        testImg.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            themePreview.innerHTML = `<img src="${meta.img}" alt="${key}" /><div>${key}: ${meta.desc}</div>`;
+          };
+          img.onerror = () => {
+            themePreview.innerHTML = `<div style="padding:8px;background:#1a1a2e;border-radius:8px;margin-bottom:8px;"><strong>${key}</strong></div><div>${meta.desc}</div>`;
+          };
+          img.src = meta.img;
         };
-        img.onerror = () => {
-          // Fallback to a working image if the preview is broken
-          themePreview.innerHTML = `<img src="posters/new_york_feature_based_20260124_034913.jpg" alt="${key}" /><div>${key}: ${meta.desc}</div>`;
+        testImg.onerror = () => {
+          themePreview.innerHTML = `<div style="padding:8px;background:#1a1a2e;border-radius:8px;margin-bottom:8px;"><strong>${key}</strong></div><div>${meta.desc}</div>`;
         };
-        img.src = meta.img;
+        testImg.src = 'assets/posters/new_york_feature_based_preview.jpg';
       }
     };
 
-    // Theme categories
     const themeCategories = {
       modern: [
         'feature_based', 'gradient_roads', 'contrast_zones', 'noir', 'midnight_blue', 
@@ -1753,15 +632,38 @@ body[data-theme="light"] .ui-theme-chip.active {
         }
       });
       
-      // Set initial selection
       const firstChip = themeChips.querySelector('.theme-chip');
       if (firstChip) {
         firstChip.classList.add('active');
       }
     };
 
-    // Initial render
     renderThemes('modern');
+    
+    // Populate Mixer Dropdowns
+    const populateMixer = () => {
+        const allThemes = [...themeCategories.modern, ...themeCategories.historical];
+        ['style-roads', 'style-water', 'style-parks', 'style-transit'].forEach(id => {
+            const select = document.getElementById(id);
+            if (!select) return;
+            allThemes.forEach(theme => {
+                const opt = document.createElement('option');
+                opt.value = theme;
+                opt.textContent = theme.replace(/_/g, ' ').toUpperCase();
+                select.appendChild(opt);
+            });
+        });
+    };
+    populateMixer();
+
+    // Toggle Mixer Visibility
+    const mixerToggle = document.getElementById('enable-mixer');
+    const mixerControls = document.getElementById('mixer-controls');
+    if (mixerToggle && mixerControls) {
+        mixerToggle.addEventListener('change', (e) => {
+            mixerControls.style.display = e.target.checked ? 'block' : 'none';
+        });
+    }
 
     const renderFontPreview = (font) => {
       if (fontPreview) {
@@ -1795,7 +697,6 @@ body[data-theme="light"] .ui-theme-chip.active {
         });
         fontChips.appendChild(chip);
       });
-      // Set initial selection
       const firstFontChip = fontChips.querySelector('.font-chip');
       if (firstFontChip) {
         firstFontChip.style.background = '#26263a';
@@ -1810,7 +711,6 @@ body[data-theme="light"] .ui-theme-chip.active {
         debugPanel.style.display = visible ? 'none' : 'block';
         debugToggle.classList.toggle('debug-open', !visible);
         
-        // Close debug panel when clicking outside
         if (!visible) {
           const closeDebug = (e) => {
             if (!debugPanel.contains(e.target) && !debugToggle.contains(e.target)) {
@@ -1826,7 +726,6 @@ body[data-theme="light"] .ui-theme-chip.active {
       });
     }
 
-    // Open outputs folder
     const openOutputsFolder = async () => {
       if (window.electronAPI?.openFolder) {
         try {
@@ -1837,7 +736,6 @@ body[data-theme="light"] .ui-theme-chip.active {
       }
     };
 
-    // Click handler for the "Open Folder" button
     const openFolderBtn = document.getElementById('open-folder-btn');
     if (openFolderBtn) {
       openFolderBtn.addEventListener('click', (e) => {
@@ -1846,7 +744,6 @@ body[data-theme="light"] .ui-theme-chip.active {
       });
     }
 
-    // Right-click context menu on viewer
     if (viewerFrame) {
       viewerFrame.addEventListener('contextmenu', (e) => {
         e.preventDefault();
@@ -1857,7 +754,6 @@ body[data-theme="light"] .ui-theme-chip.active {
     const updateExecuteState = () => {
       const raw = cityInput?.value?.trim();
       const { city, country } = parseCityCountry(raw);
-      // Allow execution if city is provided (country can be auto-detected)
       const valid = !!city;
       executeBtn.disabled = !valid;
       if (!valid && cityError) {
@@ -1870,14 +766,14 @@ body[data-theme="light"] .ui-theme-chip.active {
     const saveInputs = () => {
       const payload = {
         city: cityInput?.value || '',
-        distance: distanceInput?.value || '29000',
+        distance: distanceInput?.value || '12000',
         width: widthInput?.value || '12',
         height: heightInput?.value || '16',
         format: formatInput?.value || 'png',
         theme: selectedTheme,
+        mapType: selectedMapType,
         font: selectedFont,
         texture: selectedTexture,
-        mapStyle: selectedMapStyle,
         mapShape: selectedMapShape,
       };
       try { localStorage.setItem('mapgen.form', JSON.stringify(payload)); } catch (e) { /* ignore */ }
@@ -1894,14 +790,23 @@ body[data-theme="light"] .ui-theme-chip.active {
         if (data.height) heightInput.value = data.height;
         if (data.format) formatInput.value = data.format;
         if (data.theme && themesMeta[data.theme]) selectedTheme = data.theme;
+        if (data.mapType) {
+          selectedMapType = Array.isArray(data.mapType) ? data.mapType : [data.mapType];
+          // Clear defaults
+           mapTypeToggle.querySelectorAll('.map-type-btn').forEach(b => b.classList.remove('active'));
+           
+           selectedMapType.forEach(type => {
+              const btn = mapTypeToggle?.querySelector(`[data-type="${type}"]`);
+              if (btn) btn.classList.add('active');
+           });
+           
+           // Use the first selected type for distance presets, or default to city
+           renderDistancePresets(selectedMapType[0] || 'city');
+        }
         if (data.font && fontsList.includes(data.font)) selectedFont = data.font;
         if (data.texture) {
           selectedTexture = data.texture;
           if (textureSelect) textureSelect.value = data.texture;
-        }
-        if (data.mapStyle) {
-          selectedMapStyle = data.mapStyle;
-          if (mapStyleSelect) mapStyleSelect.value = data.mapStyle;
         }
         if (data.mapShape) {
           selectedMapShape = data.mapShape;
@@ -1910,24 +815,18 @@ body[data-theme="light"] .ui-theme-chip.active {
       } catch (e) { /* ignore */ }
     };
 
-    // Texture change handler
     textureSelect?.addEventListener('change', (e) => {
       selectedTexture = e.target.value;
     });
 
-    // Map style handler removed
-
-    // Map shape change handler
     mapShapeSelect?.addEventListener('change', (e) => {
       selectedMapShape = e.target.value;
     });
 
-    // Artistic effect change handler
     artisticEffectSelect?.addEventListener('change', (e) => {
       selectedArtisticEffect = e.target.value;
     });
 
-    // Color enhancement change handler
     colorEnhancementSelect?.addEventListener('change', (e) => {
       selectedColorEnhancement = e.target.value;
     });
@@ -1941,8 +840,8 @@ body[data-theme="light"] .ui-theme-chip.active {
         return;
       }
 
-      // If no country was detected, default to USA
-      const finalCountry = country || 'USA';
+      const finalCountry = country || '';
+
       
       if (!window.electronAPI?.generateMap) {
         setProgress(0, 'Electron API unavailable');
@@ -1961,36 +860,87 @@ body[data-theme="light"] .ui-theme-chip.active {
         const width = widthInput?.value?.trim() || '12';
         const height = heightInput?.value?.trim() || '16';
         const format = formatInput?.value?.trim() || 'png';
+        const mixerEnabled = document.getElementById('enable-mixer')?.checked || false;
+        
         await window.electronAPI.generateMap({
           city,
           country: finalCountry,
           ...(state && { state }),
           theme: selectedTheme,
+          mapType: selectedMapType,
           distance,
           width,
           height,
           format,
           font: selectedFont,
+          styleRoads: mixerEnabled ? document.getElementById('style-roads').value : '',
+          styleWater: mixerEnabled ? document.getElementById('style-water').value : '',
+          styleParks: mixerEnabled ? document.getElementById('style-parks').value : '',
+          styleTransit: mixerEnabled ? document.getElementById('style-transit').value : '',
           texture: selectedTexture,
-          // mapStyle removed
           mapShape: selectedMapShape,
           artisticEffect: selectedArtisticEffect,
           colorEnhancement: selectedColorEnhancement,
         });
-        setProgress(100, 'Done. Check /outputs for the PNG');
-        showToast('success', 'Render finished. Check /outputs');
+
+        // Immediate feedback for queue
+        showToast('info', `Added "${city}" to queue`);
+        executeBtn.disabled = false;
+        executeBtn.textContent = originalLabel;
+        executeBtn.classList.remove('loading');
+        
       } catch (err) {
         console.error(err);
         setProgress(0, 'Error: see console');
-        showToast('error', 'Render failed. See console');
-      } finally {
-        setTimeout(() => { setProgress(0, 'Idle'); executeBtn.disabled = false; }, 800);
+        showToast('error', 'Failed to queue job');
         executeBtn.classList.remove('loading');
         executeBtn.textContent = originalLabel;
-        saveInputs();
-        updateExecuteState();
+        executeBtn.disabled = false;
       }
     };
+    
+    // Listen for job completion
+    window.electronAPI?.onJobComplete?.((data) => {
+        if (data.success) {
+            showToast('success', `Render complete: ${data.city}`);
+            setProgress(100, `Finished: ${data.city}`);
+        } else {
+            showToast('error', `Render failed: ${data.city}`);
+            setProgress(0, `Error: ${data.error}`);
+        }
+    });
+    
+    // Listen for queue updates
+    window.electronAPI?.onQueueUpdate?.((status) => {
+        const queueBadge = document.getElementById('queue-counter');
+        
+        if (status.active) {
+            // Update queue counter
+            if (queueBadge) {
+                queueBadge.textContent = `AQ: ${status.count}`;
+                queueBadge.classList.add('active');
+                queueBadge.style.display = 'flex';
+            }
+            
+            // Update status message but don't lock the button
+            const statusText = status.current === 'Processing...' ? 'Processing...' : 'Queue Job';
+            // Only update text if we aren't hovering or interacting (optional, but keep simple)
+            
+            if (status.current !== 'Idle' && status.current !== 'Processing...') {
+                 statusMsg.textContent = `Generating: ${status.current}`;
+            } else {
+                 statusMsg.textContent = `Processing queue... (${status.count} remaining)`;
+            }
+        } else {
+            statusMsg.textContent = 'System Ready';
+            if (queueBadge) {
+                queueBadge.textContent = 'AQ: 0';
+                queueBadge.classList.remove('active');
+                queueBadge.style.display = 'none';
+            }
+        }
+    });
+
 
     executeBtn?.addEventListener('click', runExecute);
     const attachEnterToExecute = (el) => {
@@ -2018,12 +968,36 @@ body[data-theme="light"] .ui-theme-chip.active {
       });
     }
 
+    if (mapTypeToggle) {
+      mapTypeToggle.querySelectorAll('.map-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.dataset.type;
+          
+          if (selectedMapType.includes(type)) {
+             // Avoid deselecting the last one? Or allow it? Let's ensure at least one.
+             if (selectedMapType.length > 1) {
+                 selectedMapType = selectedMapType.filter(t => t !== type);
+                 btn.classList.remove('active');
+             }
+          } else {
+             selectedMapType.push(type);
+             btn.classList.add('active');
+          }
+          
+          // Update presets based on the most recently added or first
+          applyMapTypeDefaults(type); 
+          saveInputs();
+        });
+      });
+    }
+
+    renderDistancePresets((Array.isArray(selectedMapType) ? selectedMapType[0] : selectedMapType) || 'city');
+
     loadInputs();
     updateExecuteState();
     if (pillTheme) pillTheme.textContent = selectedTheme;
     if (pillFont) pillFont.textContent = selectedFont;
 
-    // UI Theme switching
     const uiThemes = [
       { key: 'synth', label: 'Synth Wave' },
       { key: 'dark', label: 'Dark' },
@@ -2056,7 +1030,6 @@ body[data-theme="light"] .ui-theme-chip.active {
       applyUiTheme(savedTheme);
     }
 
-    // Set initial idle state
     setProgress(0, 'Idle');
   </script>
 </body>

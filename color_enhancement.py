@@ -218,10 +218,10 @@ class ArtisticEffects:
 
     def __init__(self):
         self.effect_presets = {
-            "pencil_sketch": {"sigma_s": 60, "sigma_r": 0.07, "shade_factor": 0.05},
-            "watercolor": {"sigma_s": 150, "sigma_r": 0.5, "blur_ksize": 5},
-            "oil_painting": {"size": 7, "dynRatio": 1},
-            "vintage": {"sepia_intensity": 0.3, "vignette": True, "noise": 0.02},
+            "pencil_sketch": {"sigma_s": 60, "sigma_r": 0.07, "shade_factor": 0.08},
+            "watercolor": {"sigma_s": 150, "sigma_r": 0.5, "blur_ksize": 3},
+            "oil_painting": {"size": 5, "dynRatio": 1},
+            "vintage": {"sepia_intensity": 0.2, "vignette": True, "noise": 0.02},
         }
 
     def apply_pencil_sketch(
@@ -275,9 +275,16 @@ class ArtisticEffects:
         cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
 
         # Apply oil painting effect
-        oil_painting = cv2.xphoto.oilPainting(
-            cv_image, settings["size"], settings["dynRatio"]
-        )
+        if hasattr(cv2, "xphoto"):
+            oil_painting = cv2.xphoto.oilPainting(
+                cv_image, settings["size"], settings["dynRatio"]
+            )
+        else:
+            # Fallback to bilateral filter if xphoto not available
+            print(
+                "Warning: cv2.xphoto not found. Using bilateral filter fallback for oil painting."
+            )
+            oil_painting = cv2.bilateralFilter(cv_image, 9, 75, 75)
 
         # Convert back
         return Image.fromarray(cv2.cvtColor(oil_painting, cv2.COLOR_BGR2RGB))
@@ -436,8 +443,8 @@ class ColorEnhancer:
             enhancer = PILImage.ImageEnhance.Color(image)
             image = enhancer.enhance(1.5)
         elif enhancement_type == "vintage":
-            # Apply sepia tone
-            image = self.artistic.apply_effect(image, "sepia")
+            # Apply vintage effect (includes sepia)
+            image = self.artistic.apply_effect(image, "vintage")
         elif enhancement_type == "cool":
             # Cool color temperature
             img_array = np.array(image)
@@ -461,13 +468,73 @@ class ColorEnhancer:
         elif enhancement_type == "oil_painting":
             # Oil painting effect
             image = self.artistic.apply_effect(image, "oil_painting")
+        elif enhancement_type.startswith("seasonal_"):
+            # Apply seasonal color shift
+            season = enhancement_type.split("_")[1]
+            image = self._apply_seasonal_to_image(image, season)
+        elif enhancement_type == "geographic_colors":
+            # Boost geographic-specific colors (greens/blues)
+            image = self._apply_geographic_boost(image)
+        elif enhancement_type == "intelligent_palette":
+            # Apply a color harmony adjustment
+            image = self._apply_palette_optimization(image)
         else:
             print(f"Unknown enhancement: {enhancement_type}")
             return
 
         # Save the enhanced image
         image.save(image_path, quality=95)
-        print(f"[+] Applied {enhancement_type} enhancement")
+        print(f"[+] Applied {enhancement_type} enhancement to {image_path}")
+
+    def _apply_seasonal_to_image(self, image: Image.Image, season: str) -> Image.Image:
+        """Apply seasonal color shift directly to pixels"""
+        adjustments = self.geo_rules.seasonal_adjustments.get(season, {})
+        if not adjustments:
+            return image
+
+        img_array = np.array(image).astype(np.float32)
+
+        # Simple color shifts based on season
+        if season == "spring":
+            # Shift towards green and brighten
+            img_array[:, :, 1] *= 1.15  # Boost green
+            img_array[:, :, 2] *= 1.05  # Boost blue (cool)
+        elif season == "summer":
+            # Vivid and bright
+            img_array *= 1.1
+        elif season == "autumn":
+            # Shift towards orange/red
+            img_array[:, :, 0] *= 1.2  # Boost red
+            img_array[:, :, 1] *= 0.9  # Reduce green (makes it more orange)
+        elif season == "winter":
+            # Desaturate and cool/blue
+            img_array[:, :, 2] *= 1.2  # Boost blue
+            # Simple desaturation: pull towards grayscale
+            gray = np.mean(img_array, axis=2, keepdims=True)
+            img_array = img_array * 0.7 + gray * 0.3
+
+        img_array = np.clip(img_array, 0, 255).astype(np.uint8)
+        return Image.fromarray(img_array)
+
+    def _apply_geographic_boost(self, image: Image.Image) -> Image.Image:
+        """Boost geographic-specific colors"""
+        from PIL import ImageEnhance
+
+        # Enhance color vibrancy
+        color_enhancer = ImageEnhance.Color(image)
+        image = color_enhancer.enhance(1.4)
+        # Sligthly boost contrast
+        contrast_enhancer = ImageEnhance.Contrast(image)
+        image = contrast_enhancer.enhance(1.1)
+        return image
+
+    def _apply_palette_optimization(self, image: Image.Image) -> Image.Image:
+        """Apply color harmony adjustments"""
+        from PIL import ImageOps
+
+        # Auto-contrast to ensure full range
+        image = ImageOps.autocontrast(image, cutoff=1)
+        return image
 
 
 # Utility functions
