@@ -1,3 +1,11 @@
+# System & IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+
 # Python
 __pycache__/
 *.py[cod]
@@ -7,26 +15,58 @@ __pycache__/
 
 # Node
 node_modules/
+dist/
 
-# IDE
-.vscode/
-.idea/
-.DS_Store
-
-# Project Output
+# Logs and Data
+logs/
+*.log
 outputs/
 cache/
 .cache/
-logs/
-*.log
 *.txt
 !requirements.txt
-dist/
 
-# Documentation & Dev Tools
-docs/
+# Documentation
+# Only include the primary documentation files
+docs/*
+!docs/README.md
+!README.md
+
+# Dev Tools & Testing
+# Exclude everything that is not required to run the application
+tests/
 .odin/
 health_check.py
 examples_layered_maps.py
 generate_previews.py
-tests/
+smoke_test_log.txt
+smoke_test_log_2.txt
+health_check_output.txt
+health_chk_2.txt
+cycling_test.log
+railway_test.log
+railway_test2.log
+verify_paris.log
+verify_textures.txt
+last_error.txt
+output.txt
+test_result.txt
+capture_test.txt
+debug_log.txt
+direct_test_output.txt
+final_audit.txt
+final_audit_output.txt
+final_stderr.txt
+final_stdout.txt
+final_texture_verify.txt
+final_verify.txt
+final_verify_capture.txt
+final_verify_stderr.txt
+final_verify_stdout.txt
+manual_test_out.txt
+manual_texture_result.txt
+manual_texture_result_final.txt
+manual_texture_verification.txt
+manual_verify_result.txt
+texture_*.txt
+verify_textures.txt
