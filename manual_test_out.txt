@@ -1,3 +1,0 @@
---- MANUAL TEXTURE BLENDING TEST ---
-Using Texture: assets\textures\base\rough_grey_pulp.jpg
-DONE: texture_manual_test_result.png created

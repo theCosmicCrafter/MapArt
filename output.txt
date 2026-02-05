@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "C:\Users\richk\OneDrive\Desktop\AI_Art\maptoposter\create_map_poster.py", line 4, in <module>
-    import logging_config
-ModuleNotFoundError: No module named 'logging_config'

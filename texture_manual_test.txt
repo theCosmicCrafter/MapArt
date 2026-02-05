@@ -1,4 +1,0 @@
---- Texture Logic Test Start ---
-Target Texture: rough_grey_pulp
-Resolved Path: assets\textures\base\rough_grey_pulp.jpg
-SUCCESS: test_textured_output.png created

@@ -1,3 +1,0 @@
---- TEXTURE TEST ---
-Texture: assets\textures\base\archival_cotton_rag.jpg
-DONE
