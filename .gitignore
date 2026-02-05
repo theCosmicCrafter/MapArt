@@ -18,11 +18,13 @@ node_modules/
 dist/
 
 # Logs and Data
-logs/
-*.log
-outputs/
+logs/*
+!logs/README.md
+outputs/*
+!outputs/README.md
 cache/
 .cache/
+*.log
 *.txt
 !requirements.txt
 
