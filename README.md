@@ -45,44 +45,40 @@ A sophisticated Electron application that generates beautiful, customizable map 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/maptoposter.git
-   cd maptoposter
+   git clone https://github.com/theCosmicCrafter/MapArt.git
+   cd MapArt
    ```
 
-2. **Set up Python virtual environment**
+2. **Automated Setup (Windows)**
+   Simply run the setup script to install all dependencies and create required folders:
    ```bash
+   setup.bat
+   ```
+
+3. **Manual Setup**
+   If you prefer manual installation:
+   ```bash
+   # Create and activate virtual environment
    python -m venv .venv
-   
-   # Windows
    .venv\Scripts\activate
    
-   # macOS/Linux
-   source .venv/bin/activate
-   ```
-
-3. **Install Python dependencies**
-   ```bash
+   # Install dependencies
    pip install -r requirements.txt
-   ```
-
-4. **Install Node.js dependencies**
-   ```bash
    npm install
    ```
 
-5. **Launch the application**
+4. **Launch the application**
+   Double-click `launch_app.bat` or run:
    ```bash
    npm start
    ```
-   
-   Or simply double-click `launch_app.bat` on Windows
 
 ## 📖 Usage Guide
 
 ### Basic Usage
 
 1. **Enter Location**: Type city name (e.g., "Paris", "New York, USA")
-2. **Select Theme**: Choose from 43 available themes
+2. **Select Theme**: Choose from 43+ available themes
 3. **Adjust Settings**:
    - Distance: Map radius in meters
    - Dimensions: Width and height in inches
@@ -91,7 +87,7 @@ A sophisticated Electron application that generates beautiful, customizable map 
    - Texture: Paper texture overlay
    - Artistic Effect: Style transformation
    - Color Enhancement: Color optimization
-4. **Generate**: Click "Execute Pulse" to create your poster
+4. **Generate**: Click "Execute Pulse" to create your poster. Track progress via the AQ (Active Queue) counter in the header.
 
 ### Advanced Options
 
@@ -118,22 +114,6 @@ python create_map_poster.py --city "Tokyo" --country "Japan" --theme noir --dist
 | `--texture` | | Paper texture | none |
 | `--artistic-effect` | | Artistic style | none |
 | `--color-enhancement` | | Color optimization | none |
-
-#### Theme Examples
-
-```bash
-# Iconic grid patterns
-python create_map_poster.py -c "New York" -C "USA" -t noir -d 12000
-python create_map_poster.py -c "Barcelona" -C "Spain" -t warm_beige -d 8000
-
-# Waterfront cities
-python create_map_poster.py -c "Venice" -C "Italy" -t blueprint -d 4000
-python create_map_poster.py -c "Amsterdam" -C "Netherlands" -t ocean -d 6000
-
-# Radial patterns
-python create_map_poster.py -c "Paris" -C "France" -t pastel_dream -d 10000
-python create_map_poster.py -c "Moscow" -C "Russia" -t noir -d 12000
-```
 
 ## 🎨 Themes Gallery
 
@@ -162,21 +142,21 @@ python create_map_poster.py -c "Moscow" -C "Russia" -t noir -d 12000
 ### File Structure
 
 ```
-maptoposter/
+MapArt/
 ├── assets/
 │   ├── fonts/          # Roboto font family
-│   └── textures/       # 50+ paper textures
-├── themes/             # 43 theme JSON files
-├── outputs/            # Generated posters
-├── logs/               # Application logs
-├── tests/              # Test suite
-├── docs/               # Documentation
-├── create_map_poster.py    # Main Python script
+│   ├── textures/       # 100+ High-resolution paper textures
+│   └── posters/        # Pre-generated preview examples
+├── themes/             # 43+ custom theme JSON files
+├── outputs/            # Generated posters (ignored by Git)
+├── logs/               # Application logs (ignored by Git)
+├── map_providers/      # Specialized layer logic (Rail, Sea, Star, etc.)
+├── create_map_poster.py    # Main Python logic
 ├── main.js             # Electron main process
-├── preload.js          # Electron preload script
-├── ui_hightech.html    # Main UI
-├── color_enhancement.py    # Color processing
-└── logging_config.py  # Logging configuration
+├── ui_hightech.html    # High-tech Pulse UI
+├── color_enhancement.py    # Artistic processing & enhancement
+├── input_validation.py # Coordinate and input safety
+└── setup.bat           # Automated environment setup
 ```
 
 ### Custom Themes
@@ -186,142 +166,38 @@ Create your own theme by adding a JSON file to the `themes/` directory:
 ```json
 {
   "name": "My Custom Theme",
-  "description": "A beautiful custom theme",
   "bg": "#FFFFFF",
   "text": "#000000",
-  "gradient_color": "#FFFFFF",
-  "water": "#C0C0C0",
-  "parks": "#F0F0F0",
-  "road_motorway": "#0A0A0A",
   "road_primary": "#1A1A1A",
-  "road_secondary": "#2A2A2A",
-  "road_tertiary": "#3A3A3A",
-  "road_residential": "#4A4A4A",
-  "road_default": "#3A3A3A"
+  "water": "#C0C0C0",
+  "parks": "#F0F0F0"
 }
 ```
 
-### Custom Textures
+## 📊 Performance & Optimization
 
-Add PNG textures to `assets/textures/`:
-- Recommended size: 2048x2048 pixels
-- Format: PNG with transparency
-- Categories: base, specialty, artistic, edges, stains
-
-## 🧪 Testing
-
-Run the comprehensive test suite:
-
-```bash
-# Run all tests
-python tests/comprehensive_test.py
-
-# Run specific tests
-python tests/test_system.py
-python tests/test_quick.py
-```
-
-Test categories:
-- Environment setup
-- Dependency verification
-- File structure validation
-- Python script functionality
-- Argument parsing
-- Theme system
-- Font system
-- Texture system
-- Electron app
-- Integration tests
-
-## 📊 Performance
-
-### System Requirements
-
-**Minimum:**
-- Python 3.8
-- Node.js 16.0
-- 4GB RAM
-- 1GB free disk space
-
-**Recommended:**
-- Python 3.10+
-- Node.js 18.0+
-- 8GB RAM
-- 2GB free disk space
-
-### Performance Tips
-
-1. **Use Cache**: Enable caching for faster repeat generations
-2. **Optimize Distance**: Smaller distances generate faster
-3. **Choose Format**: SVG/PDF for vector, PNG/JPG for raster
-4. **Texture Impact**: Textures add processing time
+1. **Smart Cache**: The system caches OSM data to speed up subsequent generations of the same area.
+2. **Metadata Injection**: All generated PNGs include embedded metadata: Artist (**CosmicCrafter**), Coordinates, Theme, and Software details.
+3. **Queue System**: Supports multiple concurrent jobs with real-time progress monitoring.
 
 ## 🔍 Troubleshooting
 
-### Common Issues
-
 **NumPy Version Conflict**
-```bash
-# Downgrade NumPy for compatibility
-pip install "numpy<2.0"
-```
-
-**Font Not Found**
-- Ensure Roboto fonts are in `assets/fonts/`
-- Check font file permissions
-
-**Theme Loading Error**
-- Verify JSON syntax in theme file
-- Check file is in `themes/` directory
+If you see error related to NumPy 2.0: `pip install "numpy<2.0"`
 
 **Generation Fails**
-- Check internet connection (OSM data)
-- Verify city name spelling
-- Check logs in `logs/` directory
+- Check internet connection (required for initial OSM data fetch)
+- Verify city/country spelling
+- Check `logs/` for detailed error reports
 
-### Debug Mode
+## 📄 License & Credits
 
-Enable debug logging:
-```python
-# In create_map_poster.py
-logger.setLevel(logging.DEBUG)
-```
+This project is licensed under the MIT License.
 
-Check logs:
-```bash
-tail -f logs/map_poster.log
-```
+### Acknowledgments
+- **Inspiration**: This project was inspired by [originalankur/maptoposter](https://github.com/originalankur/maptoposter) but has since evolved into a standalone project with unique UI, layer logic, and artistic features.
+- **OpenStreetMap**: For global map data.
+- **OSMnx**: street network analysis.
+- **Electron**: desktop framework.
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](docs/CONTRIBUTING.md) for details.
-
-### Development Setup
-
-1. Fork the repository
-2. Create feature branch
-3. Make changes
-4. Add tests
-5. Submit pull request
-
-### Code Style
-
-- Python: Follow PEP 8
-- JavaScript: Use ESLint configuration
-- HTML: Follow HTML5 standards
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- **OpenStreetMap**: For map data
-- **OSMnx**: Python library for street networks
-- **Matplotlib**: Plotting library
-- **Electron**: Cross-platform desktop framework
-- ** Google Fonts
-
-
-
-**Made with ❤️ by CosmicCrafter**
+**Made with ❤️ by [CosmicCrafter](https://github.com/theCosmicCrafter)**
