@@ -17,7 +17,7 @@ A sophisticated Electron application that generates beautiful, customizable map 
 - **High Resolution**: 300 DPI output for print-quality posters
 
 ### Advanced Features
-- **Font Selection**: Choose from Roboto font family (Bold, Regular, Light)
+- **Font Selection**: Choose from fonts like Roboto font family (Bold, Regular, Light)
 - **Paper Textures**: 50+ authentic paper textures for artistic effect
 - **Artistic Effects**: Watercolor, pencil sketch, oil painting, vintage
 - **Color Enhancements**: 
@@ -177,8 +177,7 @@ Create your own theme by adding a JSON file to the `themes/` directory:
 ## 📊 Performance & Optimization
 
 1. **Smart Cache**: The system caches OSM data to speed up subsequent generations of the same area.
-2. **Metadata Injection**: All generated PNGs include embedded metadata: Artist (**CosmicCrafter**), Coordinates, Theme, and Software details.
-3. **Queue System**: Supports multiple concurrent jobs with real-time progress monitoring.
+2. **Queue System**: Supports multiple concurrent jobs with real-time progress monitoring.
 
 ## 🔍 Troubleshooting
 
